@@ -31,36 +31,39 @@ void drawCheckerBoard(){
     vector <vector<float>> color;
     //checkeboard colors
     color.push_back({0.95, 0.95, 0.75});
-    color.push_back({{0.66, 0.78, 0.3}});
+    color.push_back({0.66, 0.78, 0.3});
 
-    double x = -9, y = -9;
     int current = 0;
     vector<float> currentColor;
 
     for (int i=0; i<8; i++){
-        x += 2;
-        current = 1 - current;
-        currentColor = color[current];
-
-        for (int j=0, y=-9; j<8; j++){
-            y+= 2;
-            current = 1 - current;
+        double x = -7 + i*2;  // Position from -7 to 7 in steps of 2
+        current = i % 2;  // Alternate starting color for each row
+        
+        for (int j=0; j<8; j++){
+            double y = -7 + j*2;  // Position from -7 to 7 in steps of 2
             currentColor = color[current];
 
             glPushMatrix();
             {
-                glTranslatef(x,y,0);
+                glTranslatef(x, y, 0);
                 glColor3f(currentColor[0], currentColor[1], currentColor[2]);
-                // cout << "drawing square at " << x << ", " << y << endl;
                 drawSquare(1);
+                
+                // Only draw pieces on specific squares for testing
+                // Remove piece drawing for now - we'll add proper piece placement later
+                glColor3f(1,1,1);
+                glTranslatef(1,0,0);
+                glScalef(0.6, 0.6, 1);  // 75% of original size
+                drawBishop();
             }
             glPopMatrix();
+            
+            current = 1 - current;  // Alternate color for next square
         }
     }
 
-    glColor3f(0.5,0.5,0.5);
-
-
+    glColor3f(1.0, 1.0, 1.0);  // Reset color to white
 }
 
 
@@ -170,7 +173,43 @@ void display(){
 	// drawAxes();
 	glColor3f(1.0,1.0,1.0);
 	
-	drawCheckerBoard();
+	// drawCheckerBoard();
+	
+	// Test pieces on a few squares to verify scaling
+    drawSquare(1);
+
+    glColor3f(0.2, 0.2, 0.2);  // Dark pieces
+    
+    // Place some pieces on the board for testing
+    glPushMatrix();
+    glTranslatef(0, -0.5, 0);  // Bottom-left square
+    glScalef(0.6, 0.6, 1);    // Scale down to 75% of original size
+    drawRook();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-5, -7, 0);  // Next square
+    glScalef(0.6, 0.6, 1);
+    drawKnight();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-3, -7, 0);
+    glScalef(0.6, 0.6, 1);
+    drawBishop();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(-1, -7, 0);
+    glScalef(0.6, 0.6, 1);
+    drawQueen();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glTranslatef(1, -7, 0);
+    glScalef(0.6, 0.6, 1);
+    drawKing();
+    glPopMatrix();
     // Test arrangement of pieces with proper spacing for 8x8 board
 	// glPushMatrix();
 	// glTranslatef(-3, -2, 0);
