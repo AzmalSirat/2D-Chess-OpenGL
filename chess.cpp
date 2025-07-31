@@ -53,9 +53,11 @@ void drawCheckerBoard(){
                 // Only draw pieces on specific squares for testing
                 // Remove piece drawing for now - we'll add proper piece placement later
                 glColor3f(1,1,1);
-                glTranslatef(1,0,0);
-                glScalef(0.6, 0.6, 1);  // 75% of original size
-                drawBishop();
+                glScalef(0.6,0.6,1);
+                glPushMatrix();
+                glRotated(180, 0, 0, 1);
+                drawPawn();
+                glPopMatrix();
             }
             glPopMatrix();
             
@@ -173,85 +175,35 @@ void display(){
 	// drawAxes();
 	glColor3f(1.0,1.0,1.0);
 	
-	// drawCheckerBoard();
 	
-	// Test pieces on a few squares to verify scaling
+	
+    glPushMatrix();
+    glTranslated(1,1,0);
+    glColor3d(1,1,1);
     drawSquare(1);
-
-    glColor3f(0.2, 0.2, 0.2);  // Dark pieces
     
-    // Place some pieces on the board for testing
+    glColor3f(0, 0, 0);  // Dark pieces
+    glTranslated(-0.2,-0.2,0);
     glPushMatrix();
-    drawKnight();
-    glPopMatrix();
-    
-    glPushMatrix();
-    glTranslatef(-5, -7, 0);  // Next square
-    glScalef(0.6, 0.6, 1);
-    drawKnight();
-    glPopMatrix();
-    
-    glPushMatrix();
-    glTranslatef(-3, -7, 0);
-    glScalef(0.6, 0.6, 1);
+    glRotated(180,0,0,1);
     drawBishop();
     glPopMatrix();
-    
-    glPushMatrix();
-    glTranslatef(-1, -7, 0);
-    glScalef(0.6, 0.6, 1);
-    drawQueen();
     glPopMatrix();
-    
+
     glPushMatrix();
-    glTranslatef(1, -7, 0);
-    glScalef(0.6, 0.6, 1);
-    drawKing();
+    drawCheckerBoard();
     glPopMatrix();
-    // Test arrangement of pieces with proper spacing for 8x8 board
-	// glPushMatrix();
-	// glTranslatef(-3, -2, 0);
-	// drawPawn();
-	// glPopMatrix();
-	
-	// glPushMatrix();
-	// glTranslatef(-2, -2, 0);
-	// drawRook();
-	// glPopMatrix();
-	
-	// glPushMatrix();
-	// glTranslatef(-1, -2, 0);
-	// drawKnight();
-	// glPopMatrix();
-	
-	// glPushMatrix();
-	// glTranslatef(0, -2, 0);
-	// drawBishop();
-	// glPopMatrix();
-	
-	// glPushMatrix();
-	// glTranslatef(1, -2, 0);
-	// drawQueen();
-	// glPopMatrix();
-	
-	// glPushMatrix();
-	// glTranslatef(2, -2, 0);
-	// drawKing();
-	// glPopMatrix();
-	
-	// glPushMatrix();
-	// glTranslatef(3, -2, 0);
-	// drawBishop();
-	// glPopMatrix();
 
-    //glColor3f(1,0,0);
-    //drawSquare(10);
-
-    // drawSS();
-
-	//drawCone(20,50,24);
-
-	//drawSphere(30,24,20);
+    // Place some pieces on the board for testing
+    
+    // 
+    
+    // glPushMatrix();
+    // glTranslatef(-5, -7, 0);  // Next square
+    // glScalef(0.6, 0.6, 1);
+    // drawKnight();
+    // glPopMatrix();
+    
 
 	//ADD this line in the end --- if you use double buffer (i.e. GL_DOUBLE)
 	glutSwapBuffers();
@@ -262,7 +214,7 @@ void animate(int value){
 
 	//codes for any changes in Models, Camera
 	glutPostRedisplay();
-	glutTimerFunc(50, animate, 0);
+	glutTimerFunc(5000, animate, 0);
 }
 
 void init(){
