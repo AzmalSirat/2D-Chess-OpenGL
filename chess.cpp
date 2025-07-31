@@ -182,9 +182,7 @@ void display(){
     
     // Place some pieces on the board for testing
     glPushMatrix();
-    glTranslatef(0, -0.5, 0);  // Bottom-left square
-    glScalef(0.6, 0.6, 1);    // Scale down to 75% of original size
-    drawRook();
+    drawKnight();
     glPopMatrix();
     
     glPushMatrix();
