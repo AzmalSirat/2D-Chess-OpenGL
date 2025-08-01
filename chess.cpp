@@ -16,6 +16,9 @@ struct point
 //     color[2] = 0.75 + 0.3 - color[2];
 // }
 
+double xt[] = {1.4,1,0.5,0.2,-0.2,-0.6,-1,-1.4};
+double yt[] = {1.3,0.9,0.4,0,-0.3,-0.7,-1.2,-1.7};
+
 void drawSquare(double a)
 {
     //glColor3f(1.0,0.0,0.0);
@@ -39,6 +42,8 @@ void drawCheckerBoard(){
     for (int i=0; i<8; i++){
         double x = -7 + i*2;  // Position from -7 to 7 in steps of 2
         current = i % 2;  // Alternate starting color for each row
+
+        glPushMatrix();
         
         for (int j=0; j<8; j++){
             double y = -7 + j*2;  // Position from -7 to 7 in steps of 2
@@ -50,24 +55,19 @@ void drawCheckerBoard(){
                 glColor3f(currentColor[0],currentColor[1],currentColor[2]);
                 drawSquare(1);
                 
+                // Draw piece on top of square, centered
                 glColor3f(0, 0, 0);  // Dark pieces
-                // glTranslated(-0.2,-0.2,0);
                 glPushMatrix();
-                glRotated(180,0,0,1);
+                glTranslatef(xt[i], yt[j], 0.1);  // Move piece slightly above the square
+                // glScalef(0.8, 0.8, 1);    // Scale the piece to fit nicely in square
                 drawBishop();
-                glPopMatrix();
-                glPopMatrix();
-                glColor3f(1,1,1);
-                // glScalef(0.6,0.6,1);
-                glPushMatrix();
-                glRotated(180, 0, 0, 1);
-                drawPawn();
                 glPopMatrix();
             }
             glPopMatrix();
             
             current = 1 - current;  // Alternate color for next square
         }
+        glPopMatrix();
     }
 
     glColor3f(1.0, 1.0, 1.0);  // Reset color to white
@@ -184,22 +184,9 @@ void display(){
     drawCheckerBoard();
     glPopMatrix();
 
-    glColor3f(1.0,1.0,1.0);
-	
-	
-	
-    glPushMatrix();
-    glTranslated(1,1,0);
-    glColor3d(1,1,1);
-    drawSquare(1);
-    
-    glColor3f(0, 0, 0);  // Dark pieces
-    glTranslated(-0.2,-0.2,0);
-    glPushMatrix();
-    glRotated(180,0,0,1);
-    drawBishop();
-    glPopMatrix();
-    glPopMatrix();
+
+
+
 
     // Place some pieces on the board for testing
     
@@ -243,7 +230,7 @@ void init(){
 	glLoadIdentity();
 
 	//give PERSPECTIVE parameters
-	gluPerspective(80,	1,	1,	1000.0);
+	gluPerspective(90,	1,	1,	1000.0);
 	//field of view in the Y (vertically)
 	//aspect ratio that determines the field of view in the X direction (horizontally)
 	//near distance
