@@ -47,13 +47,18 @@ void drawCheckerBoard(){
             glPushMatrix();
             {
                 glTranslatef(x, y, 0);
-                glColor3f(currentColor[0], currentColor[1], currentColor[2]);
+                glColor3f(currentColor[0],currentColor[1],currentColor[2]);
                 drawSquare(1);
                 
-                // Only draw pieces on specific squares for testing
-                // Remove piece drawing for now - we'll add proper piece placement later
+                glColor3f(0, 0, 0);  // Dark pieces
+                // glTranslated(-0.2,-0.2,0);
+                glPushMatrix();
+                glRotated(180,0,0,1);
+                drawBishop();
+                glPopMatrix();
+                glPopMatrix();
                 glColor3f(1,1,1);
-                glScalef(0.6,0.6,1);
+                // glScalef(0.6,0.6,1);
                 glPushMatrix();
                 glRotated(180, 0, 0, 1);
                 drawPawn();
@@ -173,7 +178,13 @@ void display(){
 	//add objects
 
 	// drawAxes();
-	glColor3f(1.0,1.0,1.0);
+	
+
+    glPushMatrix();
+    drawCheckerBoard();
+    glPopMatrix();
+
+    glColor3f(1.0,1.0,1.0);
 	
 	
 	
@@ -190,10 +201,6 @@ void display(){
     glPopMatrix();
     glPopMatrix();
 
-    glPushMatrix();
-    drawCheckerBoard();
-    glPopMatrix();
-
     // Place some pieces on the board for testing
     
     // 
@@ -203,8 +210,11 @@ void display(){
     // glScalef(0.6, 0.6, 1);
     // drawKnight();
     // glPopMatrix();
+    glColor3f(1.0,1.0,1.0);
+	
+	
+	
     
-
 	//ADD this line in the end --- if you use double buffer (i.e. GL_DOUBLE)
 	glutSwapBuffers();
 }

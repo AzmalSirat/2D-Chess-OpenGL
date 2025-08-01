@@ -36,6 +36,7 @@ void drawRectangle(double width, double height) {
 }
 
 void drawPawn() {
+    glPushMatrix();
     // Scale and move down by additional 0.1
     glScalef(0.6, 0.6, 1);  // Scale to 60%
     
@@ -56,9 +57,11 @@ void drawPawn() {
     glTranslatef(0, 0.4 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
     drawCircle(0.35, 16);  // Scale up to match Rook height
     glPopMatrix();
+    glPopMatrix();
 }
 
 void drawRook() {
+    glPushMatrix();
     // Scale and move down by additional 0.1
     glScalef(0.6, 0.6, 1);  // Scale to 60%
     
@@ -89,9 +92,11 @@ void drawRook() {
     glTranslatef(0.3, 0.6 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
     drawRectangle(0.15, 0.3);
     glPopMatrix();
+    glPopMatrix();
 }
 
 void drawKnight() {
+    glPushMatrix();
     // Scale and move down by additional 0.1
     glScalef(0.6, 0.6, 1);  // Scale to 60%
     
@@ -157,9 +162,11 @@ void drawKnight() {
     glTranslatef(0.42, 0.03 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
     drawCircle(0.03, 6);
     glPopMatrix();
+    glPopMatrix();
 }
 
 void drawBishop() {
+    glPushMatrix();
     // Scale and move down by additional 0.1
     glScalef(0.6, 0.6, 1);  // Scale to 60%
     
@@ -237,9 +244,11 @@ void drawBishop() {
     glTranslatef(0, 0.35 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
     drawCircle(0.06, 8);
     glPopMatrix();
+    glPopMatrix();
 }
 
 void drawQueen() {
+    glPushMatrix();
     // Scale and move down by additional 0.1
     glScalef(0.6, 0.6, 1);  // Scale to 60%
     
@@ -339,9 +348,11 @@ void drawQueen() {
     glTranslatef(0, 0.25 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
     drawRectangle(0.6, 0.03);
     glPopMatrix();
+    glPopMatrix();
 }
 
 void drawKing() {
+    glPushMatrix();
     // Scale and move down by additional 0.1
     glScalef(0.6, 0.6, 1);  // Scale to 60%
     
@@ -386,5 +397,6 @@ void drawKing() {
     glPushMatrix();
     glTranslatef(0, 0.82 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
     drawRectangle(0.12, 0.04);
+    glPopMatrix();
     glPopMatrix();
 }
