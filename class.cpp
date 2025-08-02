@@ -16,6 +16,7 @@ double yt[] = {1.3,0.9,0.4,0,-0.3,-0.7,-1.2,-1.7};
 class Piece {
     protected:
     int x, y; // which position in the board it is in
+    int i, j; // relative position
     int color; // 0 for black, 1 for white;
     string name; // name of the piece
 
@@ -27,6 +28,8 @@ class Piece {
         this->y = y;
         this->color = color;
         this->name = name;
+        this->i = (x+7)/2;
+        this->j = (y+7)/2;
     }
     void setPosition (int x, int y){
         this->x = x;
@@ -37,10 +40,10 @@ class Piece {
     void drawHelper(){
         glColor3f(color, color, color);
         // glPushMatrix();
-        glTranslatef(xt[x], yt[y], 0.1);  // Move piece slightly above the square
+        glTranslatef(xt[i], yt[j], 0.1);  // Move piece slightly above the square
         if (color == 0) {
             glScalef(-1,-1,1);
-            glTranslatef(-0.3,-0.5,0.001);
+            glTranslatef(0,-0.25,0.001);
         }        
     }
 };

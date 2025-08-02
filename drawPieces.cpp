@@ -398,9 +398,9 @@ void drawKing() {
 
 
 void King:: draw () {
-                       
+
         glPushMatrix();
-        glTranslatef(x,y,0.01);
+        glTranslatef(x,y,0);
         drawHelper();
         drawKing();
         glPopMatrix();
