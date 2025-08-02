@@ -23,20 +23,29 @@ class Piece {
     public:
     Piece() : x(0), y(0), color(0), name("") {}
 
-    Piece(int x, int y, int color, string name){
-        this->x = x;
-        this->y = y;
+    Piece(int i, int j, int color, string name){
+        this->i = i;
+        this->j = j;
         this->color = color;
         this->name = name;
-        this->i = (x+7)/2;
-        this->j = (y+7)/2;
+        this->x = -7 + 2*i;
+        this->y = -7 + 2*j;
     }
     void setPosition (int x, int y){
         this->x = x;
         this->y = y;
     }
+
+    void setIndex (int i, int j){
+        this->i = i;
+        this->j = j;
+    }
+    void updatePosition(){
+        this->x = -7 + 2*i;
+        this->y = -7 + 2*j;
+    }
     virtual void draw() = 0;
-    virtual vector <vector <pair <int, int>>> moves () = 0;
+    // virtual //vector <vector <pair <int, int>>> moves () = 0;
 
     void drawHelper(){
         glColor3f(color, color, color);
@@ -56,7 +65,7 @@ class King : public Piece {
         // Constructor body can be empty since base constructor handles everything
     }
     void draw() override;
-    vector <vector <pair <int, int>>> moves () override;
+    //vector <vector <pair <int, int>>> moves () override;
 };
 
 class Queen : public Piece {
@@ -66,7 +75,7 @@ class Queen : public Piece {
         // Constructor body can be empty since base constructor handles everything
     }
     void draw() override;
-    vector <vector <pair <int, int>>> moves () override;
+    //vector <vector <pair <int, int>>> moves () override;
 };
 
 class Bishop : public Piece {
@@ -76,7 +85,7 @@ class Bishop : public Piece {
         // Constructor body can be empty since base constructor handles everything
     }
     void draw() override;
-    vector <vector <pair <int, int>>> moves () override;
+    //vector <vector <pair <int, int>>> moves () override;
 };
 
 class Rook : public Piece {
@@ -86,7 +95,7 @@ class Rook : public Piece {
         // Constructor body can be empty since base constructor handles everything
     }
     void draw() override;
-    vector <vector <pair <int, int>>> moves () override;
+    //vector <vector <pair <int, int>>> moves () override;
 };
 
 class Knight : public Piece {
@@ -96,7 +105,7 @@ class Knight : public Piece {
         // Constructor body can be empty since base constructor handles everything
     }
     void draw() override;
-    vector <vector <pair <int, int>>> moves () override;
+    //vector <vector <pair <int, int>>> moves () override;
 };
 
 class Pawn : public Piece {
@@ -106,5 +115,5 @@ class Pawn : public Piece {
         // Constructor body can be empty since base constructor handles everything
     }
     void draw() override;
-    vector <vector <pair <int, int>>> moves () override;
+    //vector <vector <pair <int, int>>> moves () override;
 };

@@ -2,6 +2,9 @@
 
 using namespace std;
 
+extern vector <Piece*> pieces;
+extern map <pair <int, int>, Piece*> boardMap;
+
 void keyboardListener(unsigned char key, int x,int y){
 	switch(key){
 
@@ -105,9 +108,9 @@ void display(){
     drawCheckerBoard();
     glPopMatrix();
 
-    Piece* k = new King (1,1,0,"king");
-    cout << "drawing king..." << endl;
-    k->draw();
+    for (auto& p: pieces){
+		p->draw();
+	}
 
 	//ADD this line in the end --- if you use double buffer (i.e. GL_DOUBLE)
 	glutSwapBuffers();
@@ -142,6 +145,8 @@ void init(){
 	//aspect ratio that determines the field of view in the X direction (horizontally)
 	//near distance
 	//far distance
+
+	initBoard();
 }
 
 

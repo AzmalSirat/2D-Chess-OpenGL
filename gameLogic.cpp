@@ -110,3 +110,52 @@ void Pawn:: draw () {
 
 }
 
+void initBoard(){
+
+    for (int j=0; j<8; j++){
+        if (j>1 && j<6) continue;
+        if (j==1 || j==6) {
+            int color = 1;
+            if (j==6) color = 0;
+            for (int i=0; i<8; i++){
+                Piece* p = new Pawn (i, j, color, "pawn");
+                pieces.push_back(p);
+                boardMap.insert({{i,j}, p});
+            }
+            continue;
+        }
+        if (j==0 || j==7){
+            int color = (j<=0);
+            for (int i=0; i<8; i++){
+                if (i==0 || i==7){
+                    Piece* p = new Rook (i, j, color, "rook");
+                    pieces.push_back(p);
+                    boardMap.insert({{i,j}, p});
+                }
+                if (i==1 || i==6){
+                    Piece* p = new Knight (i, j, color, "knight");
+                    pieces.push_back(p);
+                    boardMap.insert({{i,j}, p});
+                }
+                if (i==2 || i==5){
+                    Piece* p = new Bishop (i, j, color, "bishop");
+                    pieces.push_back(p);
+                    boardMap.insert({{i,j}, p});
+                }
+                
+                if (i==3){
+                    Piece* p = new King (i, j, color, "king");
+                    pieces.push_back(p);
+                    boardMap.insert({{i,j}, p});
+                }
+                if (i==4){
+                    Piece* p = new Queen (i, j, color, "queen");
+                    pieces.push_back(p);
+                    boardMap.insert({{i,j}, p});
+                }
+            }
+        }
+        
+    }
+}
+
