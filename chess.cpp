@@ -33,7 +33,7 @@ void drawSquare(double a)
 void drawCheckerBoard(){
     vector <vector<float>> color;
     //checkeboard colors
-    color.push_back({0.95, 0.95, 0.75});
+    color.push_back({0.85, 0.85, 0.65});
     color.push_back({0.66, 0.78, 0.3});
 
     int current = 0;
@@ -56,10 +56,14 @@ void drawCheckerBoard(){
                 drawSquare(1);
                 
                 // Draw piece on top of square, centered
-                glColor3f(0, 0, 0);  // Dark pieces
+                glColor3f(0,0,0);  // Dark pieces
                 glPushMatrix();
                 glTranslatef(xt[i], yt[j], 0.1);  // Move piece slightly above the square
                 // glScalef(0.8, 0.8, 1);    // Scale the piece to fit nicely in square
+                if ((i+j)%2 == 0) {
+                    glScalef(-1,-1,1);
+                    glTranslatef(0,-0.25,0.001);
+                }
                 drawBishop();
                 glPopMatrix();
             }
