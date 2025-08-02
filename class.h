@@ -36,6 +36,10 @@ class Piece {
         this->y = y;
     }
 
+    void print(){
+        cout << name << " selected at pos " << i << j << endl;
+    }
+
     void setIndex (int i, int j){
         this->i = i;
         this->j = j;
