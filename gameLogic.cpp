@@ -143,12 +143,12 @@ void initBoard(){
                     boardMap.insert({{i,j}, p});
                 }
                 
-                if (i==3){
+                if (i==4){
                     Piece* p = new King (i, j, color, "king");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
                 }
-                if (i==4){
+                if (i==3){
                     Piece* p = new Queen (i, j, color, "queen");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});

@@ -350,50 +350,41 @@ void drawKing() {
     // Scale and move down by additional 0.1
     glScalef(0.6, 0.6, 1);  // Scale to 60%
     
-    // Draw base (tallest piece) - scaled to Rook size and moved down 0.5 + 0.1
+    // Draw base - scaled to Rook size and moved down 0.5 + 0.1
     glPushMatrix();
     glTranslatef(0, -0.8 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
     drawRectangle(1.2, 0.2);  // Match Rook base
     glPopMatrix();
     
-    // Draw lower body - scaled down
+    // Draw main body with slightly tapered shape
     glPushMatrix();
-    glTranslatef(0, -0.3 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
-    drawRectangle(0.8, 0.45);
+    glTranslatef(0, -0.1 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
+    drawRectangle(0.9, 1.0);  // Slightly wider main body
     glPopMatrix();
     
-    // Draw upper body - scaled down
-    glPushMatrix();
-    glTranslatef(0, 0.1 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
-    drawRectangle(0.6, 0.35);
-    glPopMatrix();
-    
-    // Draw crown base - scaled down
+    // Draw neck/collar area
     glPushMatrix();
     glTranslatef(0, 0.4 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
-    drawRectangle(0.8, 0.18);
+    drawRectangle(0.6, 0.2);  // Collar/neck
     glPopMatrix();
     
-    // Draw crown points - scaled down
-    for (int i = -2; i <= 2; i++) {
-        glPushMatrix();
-        glTranslatef(i * 0.13, 0.6 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
-        double height = (abs(i) <= 1) ? 0.18 : 0.12;
-        drawRectangle(0.07, height);
-        glPopMatrix();
-    }
+    // Draw head (larger than original)
+    glPushMatrix();
+    glTranslatef(0, 0.65 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
+    drawCircle(0.35, 16);  // Larger circular head
+    glPopMatrix();
     
-    // Draw cross on top - scaled down to fit Rook height
+    // Draw large cross on top - vertical part (much larger and more visible)
     glPushMatrix();
-    glTranslatef(0, 0.78 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
-    drawRectangle(0.04, 0.15);
+    glTranslatef(0, 0.95 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
+    drawRectangle(0.08, 0.3);  // Much larger vertical part
     glPopMatrix();
+    
+    // Draw large cross on top - horizontal part (much larger and more visible)
     glPushMatrix();
-    glTranslatef(0, 0.82 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
-    drawRectangle(0.12, 0.04);
+    glTranslatef(0, 1.0 + 0.875 - 0.5 - 0.1, 0);  // Move down by 0.5 + 0.1
+    drawRectangle(0.25, 0.08);  // Much larger horizontal part
     glPopMatrix();
+    
     glPopMatrix();
 }
-
-
-
