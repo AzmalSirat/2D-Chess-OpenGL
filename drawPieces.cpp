@@ -1,4 +1,4 @@
-#include "class.cpp"
+#include "class.h"
 
 #define pi (2*acos(0.0))
 
@@ -397,12 +397,3 @@ void drawKing() {
 
 
 
-void King:: draw () {
-
-        glPushMatrix();
-        glTranslatef(x,y,0);
-        drawHelper();
-        drawKing();
-        glPopMatrix();
-
-}

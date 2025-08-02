@@ -1,91 +1,6 @@
-#include "drawPieces.cpp"
-
-
+#include "gameLogic.cpp"
 
 using namespace std;
-
-struct point
-{
-	double x,y,z;
-};
-
-
-
-
-
-// void changeColor(double color[]){
-//     //  color (0.95, 0.95, 0.75) and (0.66, 0.78, 0.3).
-//     color[0] = 0.95 + 0.66 - color[0];
-//     color[1] = 0.95 + 0.78 - color[1];
-//     color[2] = 0.75 + 0.3 - color[2];
-// }
-
-
-void drawSquare(double a)
-{
-    //glColor3f(1.0,0.0,0.0);
-	glBegin(GL_QUADS);{
-		glVertex3f( a, a,0);
-		glVertex3f( a,-a,0);
-		glVertex3f(-a,-a,0);
-		glVertex3f(-a, a,0);
-	}glEnd();
-}
-
-void drawCheckerBoard(){
-    vector <vector<float>> color;
-    //checkeboard colors
-    color.push_back({0.85, 0.85, 0.65});
-    color.push_back({0.66, 0.78, 0.3});
-
-    int current = 0;
-    vector<float> currentColor;
-
-    for (int i=0; i<8; i++){
-        double x = -7 + i*2;  // Position from -7 to 7 in steps of 2
-        current = i % 2;  // Alternate starting color for each row
-
-        glPushMatrix();
-        
-        for (int j=0; j<8; j++){
-            double y = -7 + j*2;  // Position from -7 to 7 in steps of 2
-            currentColor = color[current];
-
-            glPushMatrix();
-            {
-                glTranslatef(x, y, 0);
-                glColor3f(currentColor[0],currentColor[1],currentColor[2]);
-                drawSquare(1);
-                
-                // // Draw piece on top of square, centered
-                // glColor3f(0,0,0);  // Dark pieces
-                // glPushMatrix();
-                // // glTranslatef(xt[i], yt[j], 0.1);  // Move piece slightly above the square
-                // // glScalef(0.8, 0.8, 1);    // Scale the piece to fit nicely in square
-                // if ((i+j)%2 == 0) {
-                //     glScalef(-1,-1,1);
-                //     glTranslatef(0,-0.25,0.001);
-                // }
-                // drawBishop();
-                // glPopMatrix();
-            }
-            glPopMatrix();
-            
-            current = 1 - current;  // Alternate color for next square
-        }
-        glPopMatrix();
-    }
-
-    glColor3f(1.0, 1.0, 1.0);  // Reset color to white
-}
-
-
-
-// ...existing code...
-
-
-// ...existing code...
-
 
 void keyboardListener(unsigned char key, int x,int y){
 	switch(key){
@@ -194,24 +109,6 @@ void display(){
     cout << "drawing king..." << endl;
     k->draw();
 
-
-
-
-
-    // Place some pieces on the board for testing
-    
-    // 
-    
-    // glPushMatrix();
-    // glTranslatef(-5, -7, 0);  // Next square
-    // glScalef(0.6, 0.6, 1);
-    // drawKnight();
-    // glPopMatrix();
-    glColor3f(1.0,1.0,1.0);
-	
-	
-	
-    
 	//ADD this line in the end --- if you use double buffer (i.e. GL_DOUBLE)
 	glutSwapBuffers();
 }
