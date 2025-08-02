@@ -1,11 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
-#include<ctime>
-#include <bits/stdc++.h>
+#include "class.cpp"
 
-
-#include <GL/glut.h>
 #define pi (2*acos(0.0))
 
 void drawCircle(double radius, int segments) {
@@ -399,4 +393,16 @@ void drawKing() {
     drawRectangle(0.12, 0.04);
     glPopMatrix();
     glPopMatrix();
+}
+
+
+
+void King:: draw () {
+                       
+        glPushMatrix();
+        glTranslatef(x,y,0.01);
+        drawHelper();
+        drawKing();
+        glPopMatrix();
+
 }

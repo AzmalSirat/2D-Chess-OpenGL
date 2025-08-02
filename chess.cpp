@@ -9,6 +9,10 @@ struct point
 	double x,y,z;
 };
 
+
+
+
+
 // void changeColor(double color[]){
 //     //  color (0.95, 0.95, 0.75) and (0.66, 0.78, 0.3).
 //     color[0] = 0.95 + 0.66 - color[0];
@@ -16,8 +20,6 @@ struct point
 //     color[2] = 0.75 + 0.3 - color[2];
 // }
 
-double xt[] = {1.4,1,0.5,0.2,-0.2,-0.6,-1,-1.4};
-double yt[] = {1.3,0.9,0.4,0,-0.3,-0.7,-1.2,-1.7};
 
 void drawSquare(double a)
 {
@@ -55,17 +57,17 @@ void drawCheckerBoard(){
                 glColor3f(currentColor[0],currentColor[1],currentColor[2]);
                 drawSquare(1);
                 
-                // Draw piece on top of square, centered
-                glColor3f(0,0,0);  // Dark pieces
-                glPushMatrix();
-                glTranslatef(xt[i], yt[j], 0.1);  // Move piece slightly above the square
-                // glScalef(0.8, 0.8, 1);    // Scale the piece to fit nicely in square
-                if ((i+j)%2 == 0) {
-                    glScalef(-1,-1,1);
-                    glTranslatef(0,-0.25,0.001);
-                }
-                drawBishop();
-                glPopMatrix();
+                // // Draw piece on top of square, centered
+                // glColor3f(0,0,0);  // Dark pieces
+                // glPushMatrix();
+                // // glTranslatef(xt[i], yt[j], 0.1);  // Move piece slightly above the square
+                // // glScalef(0.8, 0.8, 1);    // Scale the piece to fit nicely in square
+                // if ((i+j)%2 == 0) {
+                //     glScalef(-1,-1,1);
+                //     glTranslatef(0,-0.25,0.001);
+                // }
+                // drawBishop();
+                // glPopMatrix();
             }
             glPopMatrix();
             
@@ -187,6 +189,10 @@ void display(){
     glPushMatrix();
     drawCheckerBoard();
     glPopMatrix();
+
+    Piece* k = new King (1,1,0,"king");
+    cout << "drawing king..." << endl;
+    k->draw();
 
 
 
