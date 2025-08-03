@@ -51,6 +51,34 @@ void drawCircle(string color) {
     glEnd();
 }
 
+void highlight(double color[]){
+    glColor3f(color[0],color[1],color[2]);
+	glBegin(GL_QUADS);{
+		glVertex3f( -1, -1,0.01);
+		glVertex3f( 1,-1,0.01);
+		glVertex3f(1,-0.8,0.01);
+        glVertex3f(-1, -0.8,0.01);
+	}glEnd();
+    glBegin(GL_QUADS);{
+		glVertex3f( 1, -1,0.01);
+		glVertex3f( 1,1,0.01);
+		glVertex3f(0.8,1,0.01);
+        glVertex3f(0.8, -1,0.01);
+	}glEnd();
+    glBegin(GL_QUADS);{
+		glVertex3f( -1, 1,0.01);
+		glVertex3f( -1,-1,0.01);
+		glVertex3f(-0.8,-1,0.01);
+        glVertex3f(-0.8, 1,0.01);
+	}glEnd();
+    glBegin(GL_QUADS);{
+		glVertex3f( 1, 1,0.01);
+		glVertex3f( -1,1,0.01);
+		glVertex3f(-1,0.8,0.01);
+        glVertex3f(1, 0.8,0.01);
+	}glEnd();
+}
+
 void drawCheckerBoard(){
     vector <vector<float>> color;
     //checkeboard colors
@@ -77,15 +105,16 @@ void drawCheckerBoard(){
                 drawSquare(1);
                 for (auto p: availables){
                     if (p.first == i && p.second == j){
-                        
                         glTranslatef(0.1*(4-i),0.1*(4-j),0);
                         drawCircle("green");
+                        
                         continue;
                     }
                 }
                 for (auto p: attacks){
                     if (p.first == i && p.second == j){
-                        drawCircle("red");
+                        double clr[] = {0.8, 0.1, 0.1};
+                        highlight(clr);
                         continue;
                     }
                 }
