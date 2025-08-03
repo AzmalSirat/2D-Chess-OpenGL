@@ -3,6 +3,16 @@
 vector <Piece*> pieces;
 map <pair <int, int>, Piece*> boardMap;
 
+
+Piece* findPiece(pair <int, int> p){
+	auto it = boardMap.find({p});
+	if (it != boardMap.end()){
+		return it->second;
+	}
+	return nullptr;
+}
+
+
 void drawSquare(double a)
 {
     //glColor3f(1.0,0.0,0.0);
@@ -159,3 +169,265 @@ void initBoard(){
     }
 }
 
+//find moves method
+//vector has two vector entries, first available moves with blue (no attack)
+// next available moves with red, which can attack others.
+
+vector <vector <pair <int, int>>> Pawn :: moves (){
+    vector <vector <pair <int, int>>> rt (2);
+    vector <pair <int, int>> availables;
+    vector <pair <int, int>> attacks;
+
+    pair <int, int> currentPosition = {i, j};
+    int next = j-1;
+    if (color == 1) {
+        next = j+1;
+    }
+
+    if (findPiece({i, next}) == nullptr){
+        availables.push_back({i, next});
+    }
+
+    if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
+        Piece* p = findPiece({i+1, next});
+        if (p->getColor() != color){ // different color piece, can be attacked
+            attacks.push_back({i+1, next});
+        }
+    }
+
+    if (i-1 >=0 && findPiece({i-1, next}) != nullptr) {
+        Piece* p = findPiece({i-1, next});
+        if (p->getColor() != color){ // different color piece, can be attacked
+            attacks.push_back({i-1, next});
+        }
+    }
+
+    for (auto x: availables){
+        cout << x.first << " " << x.second << endl;
+    }
+    for (auto x: attacks){
+        cout << x.first << " " << x.second << endl;
+    }
+
+    rt[0] = availables;
+    rt[1] = attacks;
+
+    return rt;
+    
+}
+
+
+vector <vector <pair <int, int>>> King :: moves (){
+    vector <vector <pair <int, int>>> rt (2);
+    vector <pair <int, int>> availables;
+    vector <pair <int, int>> attacks;
+
+    pair <int, int> currentPosition = {i, j};
+    int next = j+1;
+    if (color == 1) {
+        next = j-1;
+    }
+
+    if (findPiece({i, next}) != nullptr){
+        availables.push_back({i, next});
+    }
+
+    if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
+        Piece* p = findPiece({i+1, next});
+        if (p->getColor() != color){ // different color piece, can be attacked
+            attacks.push_back({i+1, next});
+        }
+    }
+
+    if (i-1 >=0 && findPiece({i-1, next}) != nullptr) {
+        Piece* p = findPiece({i-1, next});
+        if (p->getColor() != color){ // different color piece, can be attacked
+            attacks.push_back({i-1, next});
+        }
+    }
+
+    for (auto x: availables){
+        cout << x.first << " " << x.second << endl;
+    }
+    for (auto x: attacks){
+        cout << x.first << " " << x.second << endl;
+    }
+
+    rt[0] = availables;
+    rt[1] = attacks;
+
+    return rt;
+    
+}
+
+vector <vector <pair <int, int>>> Queen :: moves (){
+    vector <vector <pair <int, int>>> rt (2);
+    vector <pair <int, int>> availables;
+    vector <pair <int, int>> attacks;
+
+    pair <int, int> currentPosition = {i, j};
+    int next = j+1;
+    if (color == 1) {
+        next = j-1;
+    }
+
+    if (findPiece({i, next}) != nullptr){
+        availables.push_back({i, next});
+    }
+
+    if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
+        Piece* p = findPiece({i+1, next});
+        if (p->getColor() != color){ // different color piece, can be attacked
+            attacks.push_back({i+1, next});
+        }
+    }
+
+    if (i-1 >=0 && findPiece({i-1, next}) != nullptr) {
+        Piece* p = findPiece({i-1, next});
+        if (p->getColor() != color){ // different color piece, can be attacked
+            attacks.push_back({i-1, next});
+        }
+    }
+
+    for (auto x: availables){
+        cout << x.first << " " << x.second << endl;
+    }
+    for (auto x: attacks){
+        cout << x.first << " " << x.second << endl;
+    }
+
+    rt[0] = availables;
+    rt[1] = attacks;
+
+    return rt;
+    
+}
+
+vector <vector <pair <int, int>>> Knight :: moves (){
+    vector <vector <pair <int, int>>> rt (2);
+    vector <pair <int, int>> availables;
+    vector <pair <int, int>> attacks;
+
+    pair <int, int> currentPosition = {i, j};
+    int next = j+1;
+    if (color == 1) {
+        next = j-1;
+    }
+
+    if (findPiece({i, next}) != nullptr){
+        availables.push_back({i, next});
+    }
+
+    if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
+        Piece* p = findPiece({i+1, next});
+        if (p->getColor() != color){ // different color piece, can be attacked
+            attacks.push_back({i+1, next});
+        }
+    }
+
+    if (i-1 >=0 && findPiece({i-1, next}) != nullptr) {
+        Piece* p = findPiece({i-1, next});
+        if (p->getColor() != color){ // different color piece, can be attacked
+            attacks.push_back({i-1, next});
+        }
+    }
+
+    for (auto x: availables){
+        cout << x.first << " " << x.second << endl;
+    }
+    for (auto x: attacks){
+        cout << x.first << " " << x.second << endl;
+    }
+
+    rt[0] = availables;
+    rt[1] = attacks;
+
+    return rt;
+    
+}
+
+vector <vector <pair <int, int>>> Bishop :: moves (){
+    vector <vector <pair <int, int>>> rt (2);
+    vector <pair <int, int>> availables;
+    vector <pair <int, int>> attacks;
+
+    pair <int, int> currentPosition = {i, j};
+    int next = j+1;
+    if (color == 1) {
+        next = j-1;
+    }
+
+    if (findPiece({i, next}) != nullptr){
+        availables.push_back({i, next});
+    }
+
+    if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
+        Piece* p = findPiece({i+1, next});
+        if (p->getColor() != color){ // different color piece, can be attacked
+            attacks.push_back({i+1, next});
+        }
+    }
+
+    if (i-1 >=0 && findPiece({i-1, next}) != nullptr) {
+        Piece* p = findPiece({i-1, next});
+        if (p->getColor() != color){ // different color piece, can be attacked
+            attacks.push_back({i-1, next});
+        }
+    }
+
+    for (auto x: availables){
+        cout << x.first << " " << x.second << endl;
+    }
+    for (auto x: attacks){
+        cout << x.first << " " << x.second << endl;
+    }
+
+    rt[0] = availables;
+    rt[1] = attacks;
+
+    return rt;
+    
+}
+
+vector <vector <pair <int, int>>> Rook :: moves (){
+    vector <vector <pair <int, int>>> rt (2);
+    vector <pair <int, int>> availables;
+    vector <pair <int, int>> attacks;
+
+    pair <int, int> currentPosition = {i, j};
+    int next = j+1;
+    if (color == 1) {
+        next = j-1;
+    }
+
+    if (findPiece({i, next}) != nullptr){
+        availables.push_back({i, next});
+    }
+
+    if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
+        Piece* p = findPiece({i+1, next});
+        if (p->getColor() != color){ // different color piece, can be attacked
+            attacks.push_back({i+1, next});
+        }
+    }
+
+    if (i-1 >=0 && findPiece({i-1, next}) != nullptr) {
+        Piece* p = findPiece({i-1, next});
+        if (p->getColor() != color){ // different color piece, can be attacked
+            attacks.push_back({i-1, next});
+        }
+    }
+
+    for (auto x: availables){
+        cout << x.first << " " << x.second << endl;
+    }
+    for (auto x: attacks){
+        cout << x.first << " " << x.second << endl;
+    }
+
+    rt[0] = availables;
+    rt[1] = attacks;
+
+    return rt;
+    
+}

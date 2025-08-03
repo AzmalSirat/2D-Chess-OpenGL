@@ -6,19 +6,12 @@ extern vector <Piece*> pieces;
 extern map <pair <int, int>, Piece*> boardMap;
 pair <int, int> position;
 const int high_pos = 575, low_pos = 64;
+int current = 1; //starting from white
 
 pair <int, int> findPosition (int x, int y) {
 	int i = (x-low_pos)*8 / (high_pos-low_pos);
 	int j = 7- (y-low_pos)*8 / (high_pos-low_pos);
 	return {i,j};
-}
-
-Piece* findPiece(pair <int, int> p){
-	auto it = boardMap.find({p});
-	if (it != boardMap.end()){
-		return it->second;
-	}
-	return nullptr;
 }
 
 int state = 0;
@@ -66,17 +59,16 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 		case GLUT_LEFT_BUTTON:
 			if(state == GLUT_DOWN){		// 2 times?? in ONE click? -- solution is checking DOWN or UP
 				// drawaxes=1-drawaxes;
-				cout << "current co-ordinate: (" << x << ", " << y << ")\n";
-				if (state == 0){
-					state =1;
-					pair <int, int> p = findPosition(x,y);
-					cout << p.first << ", " << p.second << endl;
-
-					Piece* pos = findPiece(p);
-					if (pos != nullptr) {
-						pos->print();
-					}
+				// cout << "current co-ordinate: (" << x << ", " << y << ")\n";
+				
+				
+				pair <int, int> p = findPosition(x,y);
+				Piece* pos = findPiece(p);
+				if (pos != nullptr && pos->getColor() == current) {
+					pos->print();
+					auto x = pos->moves();
 				}
+			
 
 			}
 			break;
