@@ -4,6 +4,8 @@ using namespace std;
 
 extern vector <Piece*> pieces;
 extern map <pair <int, int>, Piece*> boardMap;
+extern vector <pair <int, int>> availables;
+extern vector <pair <int, int>> attacks;
 pair <int, int> position;
 const int high_pos = 575, low_pos = 64;
 int current = 1; //starting from white
@@ -61,12 +63,16 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 				// drawaxes=1-drawaxes;
 				// cout << "current co-ordinate: (" << x << ", " << y << ")\n";
 				
+				availables.clear();
+				attacks.clear();
 				
 				pair <int, int> p = findPosition(x,y);
 				Piece* pos = findPiece(p);
 				if (pos != nullptr && pos->getColor() == current) {
 					pos->print();
 					auto x = pos->moves();
+					availables = x[0];
+					attacks = x[1];
 				}
 			
 

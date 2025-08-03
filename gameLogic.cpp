@@ -2,6 +2,8 @@
 
 vector <Piece*> pieces;
 map <pair <int, int>, Piece*> boardMap;
+vector <pair <int, int>> availables;
+vector <pair <int, int>> attacks;
 
 
 Piece* findPiece(pair <int, int> p){
@@ -22,6 +24,31 @@ void drawSquare(double a)
 		glVertex3f(-a,-a,0);
 		glVertex3f(-a, a,0);
 	}glEnd();
+}
+
+void drawCircle(string color) {
+
+    if (color == "red"){
+        glColor3f (0.8,0.1,0.1);
+    }
+    else glColor3f (0.1,0.8,0.8);
+    
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex3f(0, 0, 0.5);  // Center of the circle at origin
+    
+    int segments = 32;  // Number of segments for smooth circle
+    double radius = 0.4;
+    
+    for (int i = 0; i <= segments; i++) {
+        double angle = 2.0 * 3.14159 * i / segments;
+        double x = radius * cos(angle);
+        double y = radius * sin(angle);
+        glVertex3f(x, y, 0.5);
+    }
+
+    cout << "circle drawn." << endl;
+    
+    glEnd();
 }
 
 void drawCheckerBoard(){
@@ -48,6 +75,20 @@ void drawCheckerBoard(){
                 glTranslatef(x, y, 0);
                 glColor3f(currentColor[0],currentColor[1],currentColor[2]);
                 drawSquare(1);
+                for (auto p: availables){
+                    if (p.first == i && p.second == j){
+                        // glTranslatef(i/10,0,0);
+                        drawCircle("green");
+                        continue;
+                    }
+                }
+                for (auto p: attacks){
+                    if (p.first == i && p.second == j){
+                        drawCircle("red");
+                        continue;
+                    }
+                }
+                // ;
             }
             glPopMatrix();
             
@@ -57,6 +98,33 @@ void drawCheckerBoard(){
     }
 
     glColor3f(1.0, 1.0, 1.0);  // Reset color to white
+}
+
+void drawAvailables(vector <pair <int, int>> availables){
+    for (auto p: availables){
+        glPushMatrix();
+        int x = -7 + 2* p.first; // x = -7 + 2i
+        int y = -7 + 2* p.second; // y = -7 + 2j
+        glTranslatef(x, y, 0.5);
+        cout << "trying to draw at " << x << y << " green" << endl;
+        // glColor3f(0.1, 0.8, 0.1);  // Set color to green
+    
+        drawCircle("green");
+        glPopMatrix();
+    }
+}
+
+void drawAttacks(vector <pair <int, int>> attacks){
+    for (auto p: attacks){
+        glPushMatrix();
+        int x = -7 + 2* p.first; // x = -7 + 2i
+        int y = -7 + 2* p.second; // y = -7 + 2j
+        // glTranslatef(x, y, 0);
+        // glColor3f(0.8, 0.1, 0.1);  // Set color to green
+    
+        drawCircle("red");
+        glPopMatrix();
+    }
 }
 
 
