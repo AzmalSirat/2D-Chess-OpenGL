@@ -31,7 +31,7 @@ void drawCircle(string color) {
     if (color == "red"){
         glColor3f (0.8,0.1,0.1);
     }
-    else glColor3f (0.1,0.8,0.8);
+    else glColor3f (0.1,0.5,0.2);
     
     glBegin(GL_TRIANGLE_FAN);
     glVertex3f(0, 0, 0.5);  // Center of the circle at origin
@@ -77,7 +77,8 @@ void drawCheckerBoard(){
                 drawSquare(1);
                 for (auto p: availables){
                     if (p.first == i && p.second == j){
-                        // glTranslatef(i/10,0,0);
+                        
+                        glTranslatef(0.1*(4-i),0.1*(4-j),0);
                         drawCircle("green");
                         continue;
                     }

@@ -63,10 +63,7 @@ class Piece {
         glColor3f(color, color, color);
         // glPushMatrix();
         glTranslatef(xt[i], yt[j], 0.1);  // Move piece slightly above the square
-        if (color == 0) {
-            glScalef(-1,-1,1);
-            glTranslatef(0,-0.25,0.001);
-        }        
+              
     }
 };
 
