@@ -9,6 +9,9 @@ extern vector <pair <int, int>> attacks;
 pair <int, int> position;
 const int high_pos = 575, low_pos = 64;
 int current = 1; //starting from white
+int selected = 0;
+Piece* selectedPiece = nullptr;
+
 
 pair <int, int> findPosition (int x, int y) {
 	int i = (x-low_pos)*8 / (high_pos-low_pos);
@@ -26,6 +29,7 @@ void keyboardListener(unsigned char key, int x,int y){
 			break;
 		
 		case 27:
+			for (auto x: pieces) delete x;
 			exit(0);
 			break; // ESC key: exit program
     
@@ -63,17 +67,72 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 				// drawaxes=1-drawaxes;
 				// cout << "current co-ordinate: (" << x << ", " << y << ")\n";
 				
+				
+				pair <int, int> p = findPosition(x,y);
+				cout << "clicked in " << p.first << ", " << p.second << endl;
+				
+				
+				//update map for all case
+
+				auto it = find(availables.begin(), availables.end(), p);
+				if (selectedPiece && it != availables.end()){
+					pair <int, int> prevPos = selectedPiece->getPosition();
+					selectedPiece->setIndex(p.first, p.second);
+					cout << "piece moved in " << p.first << ", " << p.second << endl;
+					availables.clear();
+					attacks.clear();
+					//check queen for pawn
+					boardMap.erase(prevPos);
+					boardMap.insert({p, selectedPiece});
+					selectedPiece = nullptr;
+					current = 1-current;
+					return;
+				}
+
+				auto it1 = find(attacks.begin(), attacks.end(), p);
+				if (selectedPiece && it1 != attacks.end()){
+
+					pair <int, int> pr = findPosition(x,y);
+					Piece* pos = findPiece(pr);
+					pair <int, int> prevPos = selectedPiece->getPosition();
+					//need delete logic in both vector and map
+
+					
+					// pieces.erase();
+					auto iter = find(pieces.begin(), pieces.end(), pos);
+					if (iter != pieces.end()) {
+						pieces.erase(iter);
+					}
+					
+					delete pos;
+
+					selectedPiece->setIndex(p.first, p.second);
+					availables.clear();
+					attacks.clear();
+					boardMap.erase(prevPos);
+					boardMap.erase(p); // also the current one as well
+					boardMap.insert({p, selectedPiece});
+					//check queen for pawn
+					selectedPiece = nullptr;
+					current = 1-current;
+					return;
+				}
+
 				availables.clear();
 				attacks.clear();
 				
-				pair <int, int> p = findPosition(x,y);
 				Piece* pos = findPiece(p);
+
 				if (pos != nullptr && pos->getColor() == current) {
+					cout << "piece found in " << p.first << " " <<p.second << endl;
 					pos->print();
 					auto x = pos->moves();
 					availables = x[0];
 					attacks = x[1];
+					selectedPiece = pos;
 				}
+
+				
 			
 
 			}

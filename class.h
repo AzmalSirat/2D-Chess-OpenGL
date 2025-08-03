@@ -36,6 +36,10 @@ class Piece {
         this->y = y;
     }
 
+    pair <int, int> getPosition(){
+        return {i,j};
+    }
+
     void print(){
         cout << name << " selected at pos " << i << j << endl;
     }
@@ -43,6 +47,7 @@ class Piece {
     void setIndex (int i, int j){
         this->i = i;
         this->j = j;
+        updatePosition();
     }
     void updatePosition(){
         this->x = -7 + 2*i;
