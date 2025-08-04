@@ -2,8 +2,8 @@
 
 using namespace std;
 
-extern vector <Piece*> pieces;
-extern map <pair <int, int>, Piece*> boardMap;
+extern vector <Piece*> pieces, backup;
+extern map <pair <int, int>, Piece*> boardMap, boardBackup;
 extern vector <pair <int, int>> availables;
 extern vector <pair <int, int>> attacks;
 pair <int, int> position;
@@ -107,6 +107,7 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					auto iter = find(pieces.begin(), pieces.end(), pos);
 					if (iter != pieces.end()) {
 						pieces.erase(iter);
+						backup.erase(iter);
 					}
 
 					delete pos;
@@ -117,6 +118,11 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					boardMap.erase(prevPos);
 					boardMap.erase(p); // also the current one as well
 					boardMap.insert({p, selectedPiece});
+					boardBackup.erase(prevPos);
+					boardBackup.erase(p); // also the current one as well
+					boardBackup.insert({p, selectedPiece});
+					
+					
 					previous[0] = prevPos;
 					previous[1] = p;
 					//check queen for pawn

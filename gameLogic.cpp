@@ -1,7 +1,7 @@
 #include "drawPieces.cpp"
 
-vector <Piece*> pieces;
-map <pair <int, int>, Piece*> boardMap;
+vector <Piece*> pieces, backup;
+map <pair <int, int>, Piece*> boardMap, boardBackup;
 vector <pair <int, int>> availables;
 vector <pair <int, int>> attacks;
 pair <int, int> selected = {-1,-1};
@@ -48,7 +48,7 @@ void drawCircle(string color) {
         glVertex3f(x, y, 0.5);
     }
 
-    cout << "circle drawn." << endl;
+    // cout << "circle drawn." << endl;
     
     glEnd();
 }
@@ -240,7 +240,9 @@ void initBoard(){
             for (int i=0; i<8; i++){
                 Piece* p = new Pawn (i, j, color, "pawn");
                 pieces.push_back(p);
+                backup.push_back(p);
                 boardMap.insert({{i,j}, p});
+                boardBackup.insert({{i,j}, p});
             }
             continue;
         }
@@ -250,28 +252,43 @@ void initBoard(){
                 if (i==0 || i==7){
                     Piece* p = new Rook (i, j, color, "rook");
                     pieces.push_back(p);
+                    backup.push_back(p);
+                    boardBackup.insert({{i,j}, p});
                     boardMap.insert({{i,j}, p});
+                    
                 }
                 if (i==1 || i==6){
                     Piece* p = new Knight (i, j, color, "knight");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
+                    backup.push_back(p);
+                    boardBackup.insert({{i,j}, p});
+
                 }
                 if (i==2 || i==5){
                     Piece* p = new Bishop (i, j, color, "bishop");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
+                    backup.push_back(p);
+                    boardBackup.insert({{i,j}, p});
+
                 }
                 
                 if (i==4){
                     Piece* p = new King (i, j, color, "king");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
+                    backup.push_back(p);
+                    boardBackup.insert({{i,j}, p});
+
                 }
                 if (i==3){
                     Piece* p = new Queen (i, j, color, "queen");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
+                    backup.push_back(p);
+                    boardBackup.insert({{i,j}, p});
+
                 }
             }
         }
