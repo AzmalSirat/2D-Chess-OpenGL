@@ -9,7 +9,8 @@ extern vector <pair <int, int>> attacks;
 pair <int, int> position;
 const int high_pos = 575, low_pos = 64;
 int current = 1; //starting from white
-int selected = 0;
+extern pair <int, int> selected;
+extern vector <pair <int, int>> previous;
 Piece* selectedPiece = nullptr;
 
 
@@ -83,9 +84,13 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					attacks.clear();
 					//check queen for pawn
 					boardMap.erase(prevPos);
+					previous[0] = prevPos;
+					previous[1] = p;
 					boardMap.insert({p, selectedPiece});
 					selectedPiece = nullptr;
+					selected = {-1,-1};
 					current = 1-current;
+					
 					return;
 				}
 
@@ -103,7 +108,7 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					if (iter != pieces.end()) {
 						pieces.erase(iter);
 					}
-					
+
 					delete pos;
 
 					selectedPiece->setIndex(p.first, p.second);
@@ -112,8 +117,11 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					boardMap.erase(prevPos);
 					boardMap.erase(p); // also the current one as well
 					boardMap.insert({p, selectedPiece});
+					previous[0] = prevPos;
+					previous[1] = p;
 					//check queen for pawn
 					selectedPiece = nullptr;
+					selected = {-1,-1};
 					current = 1-current;
 					return;
 				}
@@ -130,6 +138,7 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					availables = x[0];
 					attacks = x[1];
 					selectedPiece = pos;
+					selected= p;
 				}
 
 				

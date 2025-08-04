@@ -4,6 +4,8 @@ vector <Piece*> pieces;
 map <pair <int, int>, Piece*> boardMap;
 vector <pair <int, int>> availables;
 vector <pair <int, int>> attacks;
+pair <int, int> selected = {-1,-1};
+vector <pair <int, int>> previous = {{-1, -1}, {-1,-1}};
 
 
 Piece* findPiece(pair <int, int> p){
@@ -103,6 +105,15 @@ void drawCheckerBoard(){
                 glTranslatef(x, y, 0);
                 glColor3f(currentColor[0],currentColor[1],currentColor[2]);
                 drawSquare(1);
+                if (i == selected.first && j == selected.second){
+                    double clr[] = {0.1, 0.9, 0.1};
+                    highlight(clr);
+                    // continue;
+                }
+                // if ((i == previous[0].first && j == previous[0].second) ){
+                //     double clr[] = {0.9,0.9,0.1};
+                //     highlight(clr);
+                // }
                 for (auto p: availables){
                     if (p.first == i && p.second == j){
                         glTranslatef(0.1*(4-i),0.1*(4-j),0);
@@ -120,6 +131,7 @@ void drawCheckerBoard(){
                 }
                 // ;
             }
+            
             glPopMatrix();
             
             current = 1 - current;  // Alternate color for next square
@@ -321,28 +333,24 @@ vector <vector <pair <int, int>>> King :: moves (){
     vector <pair <int, int>> attacks;
 
     pair <int, int> currentPosition = {i, j};
-    int next = j+1;
-    if (color == 1) {
-        next = j-1;
-    }
-
-    if (findPiece({i, next}) != nullptr){
-        availables.push_back({i, next});
-    }
-
-    if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
-        Piece* p = findPiece({i+1, next});
-        if (p->getColor() != color){ // different color piece, can be attacked
-            attacks.push_back({i+1, next});
+    
+    for (int x = i-1; x<=i+1; x++){
+        if (x < 0 || x>7) continue;
+        for (int y = j-1; y<=j+1; y++){
+            if (y<0 || y>7) continue;
+            if (x == i && y == j) continue;
+            Piece* n = findPiece({x,y});
+            if (n == nullptr){
+                availables.push_back({x,y});
+            
+            } else {
+                if (n->getColor() != color){
+                    attacks.push_back({x,y});
+                }
+            }
         }
     }
 
-    if (i-1 >=0 && findPiece({i-1, next}) != nullptr) {
-        Piece* p = findPiece({i-1, next});
-        if (p->getColor() != color){ // different color piece, can be attacked
-            attacks.push_back({i-1, next});
-        }
-    }
 
     for (auto x: availables){
         cout << x.first << " " << x.second << endl;
