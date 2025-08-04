@@ -83,10 +83,23 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					availables.clear();
 					attacks.clear();
 					//check queen for pawn
+					Piece* checkQueen = checkPawn(selectedPiece, p);
 					boardMap.erase(prevPos);
-					previous[0] = prevPos;
-					previous[1] = p;
-					boardMap.insert({p, selectedPiece});
+					if (checkQueen == nullptr){
+						boardMap.insert({p, selectedPiece});
+					} else{
+						auto iter = find(pieces.begin(), pieces.end(), selectedPiece);
+						if (iter != pieces.end()) {
+							pieces.erase(iter);
+						}
+						pieces.push_back(checkQueen);
+						boardMap.insert({p, checkQueen});
+					}
+
+					
+					// previous[0] = prevPos;
+					// previous[1] = p;
+					
 					selectedPiece = nullptr;
 					selected = {-1,-1};
 					current = 1-current;
@@ -110,11 +123,11 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 						// backup.erase(iter);
 					}
 
-					auto iter1 = find(backup.begin(), backup.end(), pos);
-					if (iter1 != backup.end()) {
-						// pieces.erase(iter);
-						backup.erase(iter1);
-					}
+					// auto iter1 = find(backup.begin(), backup.end(), pos);
+					// if (iter1 != backup.end()) {
+					// 	// pieces.erase(iter);
+					// 	backup.erase(iter1);
+					// }
 
 					// delete pos;
 
@@ -123,14 +136,29 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					attacks.clear();
 					boardMap.erase(prevPos);
 					boardMap.erase(p); // also the current one as well
-					boardMap.insert({p, selectedPiece});
-					boardBackup.erase(prevPos);
-					boardBackup.erase(p); // also the current one as well
-					boardBackup.insert({p, selectedPiece});
+					// boardBackup.erase(prevPos);
+					// boardBackup.erase(p); // also the current one as well
 					
 					
-					previous[0] = prevPos;
-					previous[1] = p;
+					Piece* checkQueen = checkPawn(selectedPiece, p);
+					if (checkQueen == nullptr){
+						boardMap.insert({p, selectedPiece});
+						// boardBackup.insert({p, selectedPiece});
+					} else{
+						auto iter = find(pieces.begin(), pieces.end(), selectedPiece);
+						if (iter != pieces.end()) {
+							pieces.erase(iter);
+						}
+						boardMap.insert({p, checkQueen});
+						pieces.push_back(checkQueen);
+						// boardBackup.insert({p, checkQueen});
+					}
+
+					// boardBackup.insert({p, selectedPiece});
+					
+					
+					// previous[0] = prevPos;
+					// previous[1] = p;
 					//check queen for pawn
 					selectedPiece = nullptr;
 					selected = {-1,-1};

@@ -56,6 +56,9 @@ class Piece {
     int getColor () {
         return color;
     }
+    string getName() {
+        return name;
+    }
     virtual void draw() = 0;
     virtual vector <vector <pair <int, int>>> moves () = 0;
 

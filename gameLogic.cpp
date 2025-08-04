@@ -594,3 +594,13 @@ vector <vector <pair <int, int>>> Queen :: moves (){
     return rt;
     
 }
+
+Piece* checkPawn(Piece* p, pair <int, int> pos){
+    if (p->getName() != "pawn") return nullptr;
+    int color = p->getColor();
+    if ((color == 1 && pos.second == 7) || (color == 0 && pos.second == 0) ) { // white pawn reached 7th row
+        Piece *queen = new Queen (pos.first, pos.second, color, "queen");
+        return queen;
+    }
+    return nullptr; 
+}
