@@ -107,10 +107,16 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					auto iter = find(pieces.begin(), pieces.end(), pos);
 					if (iter != pieces.end()) {
 						pieces.erase(iter);
-						backup.erase(iter);
+						// backup.erase(iter);
 					}
 
-					delete pos;
+					auto iter1 = find(backup.begin(), backup.end(), pos);
+					if (iter1 != backup.end()) {
+						// pieces.erase(iter);
+						backup.erase(iter1);
+					}
+
+					// delete pos;
 
 					selectedPiece->setIndex(p.first, p.second);
 					availables.clear();

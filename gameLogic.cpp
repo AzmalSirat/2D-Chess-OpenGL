@@ -513,7 +513,7 @@ vector <vector <pair <int, int>>> Bishop :: moves (){
     
 }
 
-vector <vector <pair <int, int>>> rookHelper(Piece* p, int i, int j){
+vector <vector <pair <int, int>>> rookHelper(Piece* t, int i, int j){
     vector <vector <pair <int, int>>> rt (2);
     vector <pair <int, int>> availables;
     vector <pair <int, int>> attacks;
@@ -524,7 +524,7 @@ vector <vector <pair <int, int>>> rookHelper(Piece* p, int i, int j){
         if (i+a > 7) break;
         Piece *p = findPiece({i+a, j});
         if (p != nullptr){
-            if (p->getColor() != p->getColor()){
+            if (p->getColor() != t->getColor()){
                 attacks.push_back({i+a, j});
             }
             break;
@@ -536,7 +536,7 @@ vector <vector <pair <int, int>>> rookHelper(Piece* p, int i, int j){
         if (i-a <0) break;
         Piece *p = findPiece({i-a, j});
         if (p != nullptr){
-            if (p->getColor() != p->getColor()){
+            if (p->getColor() != t->getColor()){
                 attacks.push_back({i-a, j});
             }
             break;
@@ -548,7 +548,7 @@ vector <vector <pair <int, int>>> rookHelper(Piece* p, int i, int j){
         if (j -a < 0) break;
         Piece *p = findPiece({i, j-a});
         if (p != nullptr){
-            if (p->getColor() != p->getColor()){
+            if (p->getColor() != t->getColor()){
                 attacks.push_back({i, j-a});
             }
             break;
@@ -560,7 +560,7 @@ vector <vector <pair <int, int>>> rookHelper(Piece* p, int i, int j){
         if (j +a > 7) break;
         Piece *p = findPiece({i, j+a});
         if (p != nullptr){
-            if (p->getColor() != p->getColor()){
+            if (p->getColor() != t->getColor()){
                 attacks.push_back({i, j+a});
             }
             break;
