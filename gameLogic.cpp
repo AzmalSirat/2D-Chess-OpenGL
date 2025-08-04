@@ -313,6 +313,13 @@ vector <vector <pair <int, int>>> Pawn :: moves (){
 
     if (findPiece({i, next}) == nullptr){
         availables.push_back({i, next});
+        if (findPiece({i, next+1}) == nullptr && color == 1 && j == 1){ // first move for white
+            availables.push_back({i, next+1});
+        }
+        if (findPiece({i, next-1}) == nullptr && color == 0 && j == 6){ // first move for white
+            availables.push_back({i, next-1});
+        }
+
     }
 
     if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
