@@ -65,9 +65,6 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 	switch(button){
 		case GLUT_LEFT_BUTTON:
 			if(state == GLUT_DOWN){		// 2 times?? in ONE click? -- solution is checking DOWN or UP
-				// drawaxes=1-drawaxes;
-				// cout << "current co-ordinate: (" << x << ", " << y << ")\n";
-				
 				
 				pair <int, int> p = findPosition(x,y);
 				cout << "clicked in " << p.first << ", " << p.second << endl;
@@ -96,10 +93,6 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 						boardMap.insert({p, checkQueen});
 					}
 
-					
-					// previous[0] = prevPos;
-					// previous[1] = p;
-					
 					selectedPiece = nullptr;
 					selected = {-1,-1};
 					current = 1-current;
@@ -113,37 +106,23 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					pair <int, int> pr = findPosition(x,y);
 					Piece* pos = findPiece(pr);
 					pair <int, int> prevPos = selectedPiece->getPosition();
-					//need delete logic in both vector and map
-
 					
-					// pieces.erase();
 					auto iter = find(pieces.begin(), pieces.end(), pos);
 					if (iter != pieces.end()) {
 						pieces.erase(iter);
-						// backup.erase(iter);
 					}
 
-					// auto iter1 = find(backup.begin(), backup.end(), pos);
-					// if (iter1 != backup.end()) {
-					// 	// pieces.erase(iter);
-					// 	backup.erase(iter1);
-					// }
-
-					// delete pos;
+					delete pos;
 
 					selectedPiece->setIndex(p.first, p.second);
 					availables.clear();
 					attacks.clear();
 					boardMap.erase(prevPos);
 					boardMap.erase(p); // also the current one as well
-					// boardBackup.erase(prevPos);
-					// boardBackup.erase(p); // also the current one as well
-					
 					
 					Piece* checkQueen = checkPawn(selectedPiece, p);
 					if (checkQueen == nullptr){
 						boardMap.insert({p, selectedPiece});
-						// boardBackup.insert({p, selectedPiece});
 					} else{
 						auto iter = find(pieces.begin(), pieces.end(), selectedPiece);
 						if (iter != pieces.end()) {
@@ -151,15 +130,8 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 						}
 						boardMap.insert({p, checkQueen});
 						pieces.push_back(checkQueen);
-						// boardBackup.insert({p, checkQueen});
 					}
-
-					// boardBackup.insert({p, selectedPiece});
 					
-					
-					// previous[0] = prevPos;
-					// previous[1] = p;
-					//check queen for pawn
 					selectedPiece = nullptr;
 					selected = {-1,-1};
 					current = 1-current;
@@ -181,8 +153,6 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					selected= p;
 				}
 
-				
-			
 
 			}
 			break;

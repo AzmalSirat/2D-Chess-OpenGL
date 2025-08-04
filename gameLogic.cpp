@@ -16,6 +16,15 @@ Piece* findPiece(pair <int, int> p){
 	return nullptr;
 }
 
+Piece* findBackup(pair <int, int> p){
+	auto it = boardBackup.find({p});
+	if (it != boardBackup.end()){
+		return it->second;
+	}
+	return nullptr;
+}
+
+
 
 void drawSquare(double a)
 {
@@ -509,13 +518,7 @@ vector <vector <pair <int, int>>> bishopHelper(Piece* t, int i, int j){
 }
 
 vector <vector <pair <int, int>>> Bishop :: moves (){
-    // vector <vector <pair <int, int>>> rt (2);
-
-    // // pair <int, int> currentPosition = {i, j};
     
-    // rt = bishopHelper(this, i, j);
-
-    // return rt;
     return bishopHelper(this, i, j);
     
 }
@@ -610,4 +613,151 @@ Piece* checkPawn(Piece* p, pair <int, int> pos){
         return queen;
     }
     return nullptr; 
+}
+
+bool kingCheckRook(int color, int i, int j){
+    for (int a=1; i+a < 8; a++){
+        Piece* p = findBackup({i+a, j});
+        if (p != nullptr){
+            if (p->getColor() != color && (p->getName()== "rook" || p->getName() == "queen")){
+                return true;
+            }
+            continue; // check other options for check...
+        }
+    }
+
+    for (int a=1; i-a >=0; a++){
+        Piece* p = findBackup({i-a, j});
+        if (p != nullptr){
+            if (p->getColor() != color && (p->getName()== "rook" || p->getName() == "queen")){
+                return true;
+            }
+            continue; // check other options for check...
+        }
+    }
+
+    for (int a=1; j+a < 8; a++){
+        Piece* p = findBackup({i, j+a});
+        if (p != nullptr){
+            if (p->getColor() != color && (p->getName()== "rook" || p->getName() == "queen")){
+                return true;
+            }
+            continue; // check other options for check...
+        }
+    }
+
+    for (int a=1; j-a >= 0; a++){
+        Piece* p = findBackup({i, j-a});
+        if (p != nullptr){
+            if (p->getColor() != color && (p->getName()== "rook" || p->getName() == "queen")){
+                return true;
+            }
+            continue; // check other options for check...
+        }
+    }
+    return false;
+}
+
+bool kingCheckBishop (int color, int i, int j){
+    for (int a=1; i+a < 8 && j+a < 8; a++){
+        Piece* p = findBackup({i+a, j+a});
+        if (p != nullptr){
+            if (p->getColor() != color && (p->getName()== "bishop" || p->getName() == "queen")){
+                return true;
+            }
+            continue; // check other options for check...
+        }
+    }
+    for (int a=1; i-a >= 0 && j-a >= 0; a++){
+        Piece* p = findBackup({i-a, j-a});
+        if (p != nullptr){
+            if (p->getColor() != color && (p->getName()== "bishop" || p->getName() == "queen")){
+                return true;
+            }
+            continue; // check other options for check...
+        }
+    }
+    for (int a=1; i+a < 8 && j-a >=0; a++){
+        Piece* p = findBackup({i+a, j-a});
+        if (p != nullptr){
+            if (p->getColor() != color && (p->getName()== "bishop" || p->getName() == "queen")){
+                return true;
+            }
+            continue; // check other options for check...
+        }
+    }
+    for (int a=1; i-a >= 0 && j+a < 8; a++){
+        Piece* p = findBackup({i-a, j+a});
+        if (p != nullptr){
+            if (p->getColor() != color && (p->getName()== "bishop" || p->getName() == "queen")){
+                return true;
+            }
+            continue; // check other options for check...
+        }
+    }
+    return false;
+}
+
+bool kingCheckPawn(int color, int i,int j){
+    int next = j+1;
+    if (color == 0) {
+        next = j-1;
+    }
+    if (i+1 < 8){
+        Piece* p = findBackup({i+1, next});
+        if (p != nullptr){
+            if (p->getColor() != color && p->getName()== "pawn"){
+                return true;
+            }
+        }
+    }
+    if (i-1 >= 0){
+        Piece* p = findBackup({i-1, next});
+        if (p != nullptr){
+            if (p->getColor() != color && p->getName()== "pawn"){
+                return true;
+            }
+        }
+    }
+    return false;
+    
+}
+
+bool kingCheck (int color){
+    Piece* king = nullptr;
+    for (auto x: pieces){
+        if (x->getColor() == color && x->getName()=="king"){
+            king = x;
+            break;
+        }
+    }
+
+    pair <int, int> pos;
+    //traverse map to find king's position
+    for (auto x: boardBackup){
+        if (x.second == king){
+            pos = x.first;
+            break;
+        }
+    }
+    int i = pos.first;
+    int j = pos.second;
+
+    // then check if any attacking piece in positions to attack...
+    // if any rook or queen next piece in column or row, check
+    bool rookCheck = kingCheckRook(color, i, j);
+    if (rookCheck) return true;
+    bool bishopCheck = kingCheckBishop(color, i, j);
+    if (bishopCheck) return true;
+    
+    bool pawnCheck = kingCheckPawn(color, i, j);
+    if (pawnCheck) return true;
+
+    // add Knight check logic
+
+    return false;
+
+     
+
+
 }
