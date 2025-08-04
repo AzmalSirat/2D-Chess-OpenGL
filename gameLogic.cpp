@@ -366,106 +366,72 @@ vector <vector <pair <int, int>>> King :: moves (){
     
 }
 
-vector <vector <pair <int, int>>> Queen :: moves (){
+vector <vector <pair <int, int>>> knightHelper (Piece* t, int i, int j, bool isUp){
+    int a=j, b=i;
+    if (isUp){
+        a = i;
+        b = j;
+    }
+
     vector <vector <pair <int, int>>> rt (2);
     vector <pair <int, int>> availables;
     vector <pair <int, int>> attacks;
 
-    pair <int, int> currentPosition = {i, j};
-    int next = j+1;
-    if (color == 1) {
-        next = j-1;
-    }
+    if (a<8 && a>=0){
 
-    if (findPiece({i, next}) != nullptr){
-        availables.push_back({i, next});
-    }
-
-    if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
-        Piece* p = findPiece({i+1, next});
-        if (p->getColor() != color){ // different color piece, can be attacked
-            attacks.push_back({i+1, next});
+        if (b >= 0 && b <8){
+            Piece *p;
+            if (isUp) p = findPiece({a,b});
+            else p = findPiece({b,a});
+            if (p != nullptr){
+                if (p->getColor() != t->getColor()){
+                    if (isUp)  attacks.push_back({a,b});
+                    else attacks.push_back({b,a});
+                }
+            } else {
+                if (isUp)  availables.push_back({a,b});
+                    else availables.push_back({b,a});
+            }
         }
-    }
-
-    if (i-1 >=0 && findPiece({i-1, next}) != nullptr) {
-        Piece* p = findPiece({i-1, next});
-        if (p->getColor() != color){ // different color piece, can be attacked
-            attacks.push_back({i-1, next});
-        }
-    }
-
-    for (auto x: availables){
-        cout << x.first << " " << x.second << endl;
-    }
-    for (auto x: attacks){
-        cout << x.first << " " << x.second << endl;
     }
 
     rt[0] = availables;
     rt[1] = attacks;
 
     return rt;
-    
+
+
 }
 
 vector <vector <pair <int, int>>> Knight :: moves (){
     vector <vector <pair <int, int>>> rt (2);
-    vector <pair <int, int>> availables;
-    vector <pair <int, int>> attacks;
+    vector <vector <pair <int, int>>> temp;
 
-    pair <int, int> currentPosition = {i, j};
-    int next = j+1;
-    if (color == 1) {
-        next = j-1;
+    int iArray[] = {i+2, i+2, i-2, i-2, i+1, i-1, i+1, i-1};
+    int jArray[] = {j+1, j-1, j+1, j-1, j+2, j+2, j-2, j-2};
+    bool bArray[] = {true, true, true, true, false, false, false, false};
+
+    for (int a =0; a<8; a++){
+        temp = knightHelper(this, iArray[a], jArray[a], bArray[a]);
+        for (auto x: temp[0]) rt[0].push_back(x);
+        for (auto x: temp[1]) rt[1].push_back(x);
     }
-
-    if (findPiece({i, next}) != nullptr){
-        availables.push_back({i, next});
-    }
-
-    if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
-        Piece* p = findPiece({i+1, next});
-        if (p->getColor() != color){ // different color piece, can be attacked
-            attacks.push_back({i+1, next});
-        }
-    }
-
-    if (i-1 >=0 && findPiece({i-1, next}) != nullptr) {
-        Piece* p = findPiece({i-1, next});
-        if (p->getColor() != color){ // different color piece, can be attacked
-            attacks.push_back({i-1, next});
-        }
-    }
-
-    for (auto x: availables){
-        cout << x.first << " " << x.second << endl;
-    }
-    for (auto x: attacks){
-        cout << x.first << " " << x.second << endl;
-    }
-
-    rt[0] = availables;
-    rt[1] = attacks;
-
+    
     return rt;
     
 }
 
-vector <vector <pair <int, int>>> Bishop :: moves (){
+vector <vector <pair <int, int>>> bishopHelper(Piece* t, int i, int j){
     vector <vector <pair <int, int>>> rt (2);
     vector <pair <int, int>> availables;
     vector <pair <int, int>> attacks;
-
-    pair <int, int> currentPosition = {i, j};
-    
 
     //four segments for up-right, up-left, down-right and down-left
     for (int a = 1; a<8; a++){
         if (i+a > 7 || j +a > 7) break;
         Piece *p = findPiece({i+a, j+a});
         if (p != nullptr){
-            if (p->getColor() != color){
+            if (p->getColor() != t->getColor()){
                 attacks.push_back({i+a, j+a});
             }
             break;
@@ -477,7 +443,7 @@ vector <vector <pair <int, int>>> Bishop :: moves (){
         if (i-a <0 || j -a < 0) break;
         Piece *p = findPiece({i-a, j-a});
         if (p != nullptr){
-            if (p->getColor() != color){
+            if (p->getColor() != t->getColor()){
                 attacks.push_back({i-a, j-a});
             }
             break;
@@ -489,7 +455,7 @@ vector <vector <pair <int, int>>> Bishop :: moves (){
         if (i+a > 7 || j -a < 0) break;
         Piece *p = findPiece({i+a, j-a});
         if (p != nullptr){
-            if (p->getColor() != color){
+            if (p->getColor() != t->getColor()){
                 attacks.push_back({i+a, j-a});
             }
             break;
@@ -501,7 +467,7 @@ vector <vector <pair <int, int>>> Bishop :: moves (){
         if (i-a < 0 || j +a > 7) break;
         Piece *p = findPiece({i-a, j+a});
         if (p != nullptr){
-            if (p->getColor() != color){
+            if (p->getColor() != t->getColor()){
                 attacks.push_back({i-a, j+a});
             }
             break;
@@ -515,46 +481,98 @@ vector <vector <pair <int, int>>> Bishop :: moves (){
 
     return rt;
     
+
 }
 
-vector <vector <pair <int, int>>> Rook :: moves (){
+vector <vector <pair <int, int>>> Bishop :: moves (){
+    // vector <vector <pair <int, int>>> rt (2);
+
+    // // pair <int, int> currentPosition = {i, j};
+    
+    // rt = bishopHelper(this, i, j);
+
+    // return rt;
+    return bishopHelper(this, i, j);
+    
+}
+
+vector <vector <pair <int, int>>> rookHelper(Piece* p, int i, int j){
     vector <vector <pair <int, int>>> rt (2);
     vector <pair <int, int>> availables;
     vector <pair <int, int>> attacks;
+    
 
-    pair <int, int> currentPosition = {i, j};
-    int next = j+1;
-    if (color == 1) {
-        next = j-1;
-    }
-
-    if (findPiece({i, next}) != nullptr){
-        availables.push_back({i, next});
-    }
-
-    if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
-        Piece* p = findPiece({i+1, next});
-        if (p->getColor() != color){ // different color piece, can be attacked
-            attacks.push_back({i+1, next});
+    //four segments for up-right, up-left, down-right and down-left
+    for (int a = 1; a<8; a++){
+        if (i+a > 7) break;
+        Piece *p = findPiece({i+a, j});
+        if (p != nullptr){
+            if (p->getColor() != p->getColor()){
+                attacks.push_back({i+a, j});
+            }
+            break;
         }
+        availables.push_back({i+a, j});
     }
 
-    if (i-1 >=0 && findPiece({i-1, next}) != nullptr) {
-        Piece* p = findPiece({i-1, next});
-        if (p->getColor() != color){ // different color piece, can be attacked
-            attacks.push_back({i-1, next});
+    for (int a = 1; a<8; a++){
+        if (i-a <0) break;
+        Piece *p = findPiece({i-a, j});
+        if (p != nullptr){
+            if (p->getColor() != p->getColor()){
+                attacks.push_back({i-a, j});
+            }
+            break;
         }
+        availables.push_back({i-a, j});
     }
 
-    for (auto x: availables){
-        cout << x.first << " " << x.second << endl;
+    for (int a = 1; a<8; a++){
+        if (j -a < 0) break;
+        Piece *p = findPiece({i, j-a});
+        if (p != nullptr){
+            if (p->getColor() != p->getColor()){
+                attacks.push_back({i, j-a});
+            }
+            break;
+        }
+        availables.push_back({i, j-a});
     }
-    for (auto x: attacks){
-        cout << x.first << " " << x.second << endl;
+
+    for (int a = 1; a<8; a++){
+        if (j +a > 7) break;
+        Piece *p = findPiece({i, j+a});
+        if (p != nullptr){
+            if (p->getColor() != p->getColor()){
+                attacks.push_back({i, j+a});
+            }
+            break;
+        }
+        availables.push_back({i, j+a});
     }
 
     rt[0] = availables;
     rt[1] = attacks;
+
+    return rt;
+}
+
+vector <vector <pair <int, int>>> Rook :: moves (){
+    return rookHelper(this, i, j);
+    
+}
+
+
+vector <vector <pair <int, int>>> Queen :: moves (){
+
+    vector <vector <pair <int, int>>> rt = rookHelper(this, i, j);
+    vector <vector <pair <int, int>>> b = bishopHelper(this, i, j);
+    for (auto x: b[0]){
+        rt[0].push_back(x);
+    }
+    for (auto x: b[1]){
+        rt[1].push_back(x);
+    }
 
     return rt;
     
