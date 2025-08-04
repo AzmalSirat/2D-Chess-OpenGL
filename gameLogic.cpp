@@ -458,35 +458,57 @@ vector <vector <pair <int, int>>> Bishop :: moves (){
     vector <pair <int, int>> attacks;
 
     pair <int, int> currentPosition = {i, j};
-    int next = j+1;
-    if (color == 1) {
-        next = j-1;
-    }
+    
 
-    if (findPiece({i, next}) != nullptr){
-        availables.push_back({i, next});
-    }
-
-    if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
-        Piece* p = findPiece({i+1, next});
-        if (p->getColor() != color){ // different color piece, can be attacked
-            attacks.push_back({i+1, next});
+    //four segments for up-right, up-left, down-right and down-left
+    for (int a = 1; a<8; a++){
+        if (i+a > 7 || j +a > 7) break;
+        Piece *p = findPiece({i+a, j+a});
+        if (p != nullptr){
+            if (p->getColor() != color){
+                attacks.push_back({i+a, j+a});
+            }
+            break;
         }
+        availables.push_back({i+a, j+a});
     }
 
-    if (i-1 >=0 && findPiece({i-1, next}) != nullptr) {
-        Piece* p = findPiece({i-1, next});
-        if (p->getColor() != color){ // different color piece, can be attacked
-            attacks.push_back({i-1, next});
+    for (int a = 1; a<8; a++){
+        if (i-a <0 || j -a < 0) break;
+        Piece *p = findPiece({i-a, j-a});
+        if (p != nullptr){
+            if (p->getColor() != color){
+                attacks.push_back({i-a, j-a});
+            }
+            break;
         }
+        availables.push_back({i-a, j-a});
     }
 
-    for (auto x: availables){
-        cout << x.first << " " << x.second << endl;
+    for (int a = 1; a<8; a++){
+        if (i+a > 7 || j -a < 0) break;
+        Piece *p = findPiece({i+a, j-a});
+        if (p != nullptr){
+            if (p->getColor() != color){
+                attacks.push_back({i+a, j-a});
+            }
+            break;
+        }
+        availables.push_back({i+a, j-a});
     }
-    for (auto x: attacks){
-        cout << x.first << " " << x.second << endl;
+
+    for (int a = 1; a<8; a++){
+        if (i-a < 0 || j +a > 7) break;
+        Piece *p = findPiece({i-a, j+a});
+        if (p != nullptr){
+            if (p->getColor() != color){
+                attacks.push_back({i-a, j+a});
+            }
+            break;
+        }
+        availables.push_back({i-a, j+a});
     }
+
 
     rt[0] = availables;
     rt[1] = attacks;
