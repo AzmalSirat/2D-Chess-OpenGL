@@ -45,7 +45,7 @@ bool kingCheckRook(int color, int i, int j){
             if (p->getColor() != color && (p->getName()== "rook" || p->getName() == "queen")){
                 return true;
             }
-            continue; // check other options for check...
+            break; // check other options for check...
         }
     }
 
@@ -55,7 +55,7 @@ bool kingCheckRook(int color, int i, int j){
             if (p->getColor() != color && (p->getName()== "rook" || p->getName() == "queen")){
                 return true;
             }
-            continue; // check other options for check...
+            break;; // check other options for check...
         }
     }
 
@@ -65,7 +65,7 @@ bool kingCheckRook(int color, int i, int j){
             if (p->getColor() != color && (p->getName()== "rook" || p->getName() == "queen")){
                 return true;
             }
-            continue; // check other options for check...
+            break; // check other options for check...
         }
     }
 
@@ -75,7 +75,7 @@ bool kingCheckRook(int color, int i, int j){
             if (p->getColor() != color && (p->getName()== "rook" || p->getName() == "queen")){
                 return true;
             }
-            continue; // not check by rook or queen acting as rook
+            break; // not check by rook or queen acting as rook
         }
     }
     return false;
@@ -88,7 +88,7 @@ bool kingCheckBishop (int color, int i, int j){
             if (p->getColor() != color && (p->getName()== "bishop" || p->getName() == "queen")){
                 return true;
             }
-            continue; // check other options for check...
+            break; // check other options for check...
         }
     }
     for (int a=1; i-a >= 0 && j-a >= 0; a++){
@@ -97,7 +97,7 @@ bool kingCheckBishop (int color, int i, int j){
             if (p->getColor() != color && (p->getName()== "bishop" || p->getName() == "queen")){
                 return true;
             }
-            continue; // check other options for check...
+            break; // check other options for check...
         }
     }
     for (int a=1; i+a < 8 && j-a >=0; a++){
@@ -106,7 +106,7 @@ bool kingCheckBishop (int color, int i, int j){
             if (p->getColor() != color && (p->getName()== "bishop" || p->getName() == "queen")){
                 return true;
             }
-            continue; // check other options for check...
+            break; // check other options for check...
         }
     }
     for (int a=1; i-a >= 0 && j+a < 8; a++){
@@ -115,7 +115,7 @@ bool kingCheckBishop (int color, int i, int j){
             if (p->getColor() != color && (p->getName()== "bishop" || p->getName() == "queen")){
                 return true;
             }
-            continue; // check other options for check...
+            break; // check other options for check...
         }
     }
     return false;
