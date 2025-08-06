@@ -637,49 +637,33 @@ vector <vector <pair <int, int>>> bishopHelper(Piece* t, int i, int j){
     for (int a = 1; a<8; a++){
         if (i+a > 7 || j +a > 7) break;
         Piece *p = findPiece({i+a, j+a});
-        if (p != nullptr){
-            if (p->getColor() != t->getColor()){
-                attacks.push_back({i+a, j+a});
-            }
+        if (updateVectors(t, p, i+a, j+a, availables, attacks) == false){
             break;
         }
-        availables.push_back({i+a, j+a});
     }
 
     for (int a = 1; a<8; a++){
         if (i-a <0 || j -a < 0) break;
         Piece *p = findPiece({i-a, j-a});
-        if (p != nullptr){
-            if (p->getColor() != t->getColor()){
-                attacks.push_back({i-a, j-a});
-            }
+        if (updateVectors(t, p, i-a, j-a, availables, attacks) == false){
             break;
         }
-        availables.push_back({i-a, j-a});
     }
 
     for (int a = 1; a<8; a++){
         if (i+a > 7 || j -a < 0) break;
         Piece *p = findPiece({i+a, j-a});
-        if (p != nullptr){
-            if (p->getColor() != t->getColor()){
-                attacks.push_back({i+a, j-a});
-            }
+        if (updateVectors(t, p, i+a, j-a, availables, attacks) == false){
             break;
         }
-        availables.push_back({i+a, j-a});
     }
 
     for (int a = 1; a<8; a++){
         if (i-a < 0 || j +a > 7) break;
         Piece *p = findPiece({i-a, j+a});
-        if (p != nullptr){
-            if (p->getColor() != t->getColor()){
-                attacks.push_back({i-a, j+a});
-            }
+        if (updateVectors(t, p, i-a, j+a, availables, attacks) == false){
             break;
         }
-        availables.push_back({i-a, j+a});
     }
 
 
