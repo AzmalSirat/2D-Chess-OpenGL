@@ -503,35 +503,32 @@ vector <vector <pair <int, int>>> Pawn :: moves (){
     int next = j-1;
     if (color == 1) {
         next = j+1;
+
     }
 
-    if (findPiece({i, next}) == nullptr){
-        availables.push_back({i, next});
-        if (findPiece({i, next+1}) == nullptr && color == 1 && j == 1){ // first move for white
-            availables.push_back({i, next+1});
-        }
-        if (findPiece({i, next-1}) == nullptr && color == 0 && j == 6){ // first move for white
-            availables.push_back({i, next-1});
-        }
+    Piece* p = findPiece({i,next});
 
+    updateVectors(this, p, i, next, availables, attacks);
+
+    p = findPiece({i,next+1});
+    if (p == nullptr && color == 1 && j == 1){ // first move for white
+        updateVectors(this, p, i, next+1, availables, attacks);
+    }
+    p = findPiece({i,next-1});
+    if (p == nullptr && color == 0 && j == 6){ // first move for black
+        updateVectors(this, p, i, next-1, availables, attacks);
     }
 
     if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
-        Piece* p = findPiece({i+1, next});
-        if (p->getColor() != color){ // different color piece, can be attacked
-            attacks.push_back({i+1, next});
-        }
+        p = findPiece({i+1, next});
+        updateVectors(this, p, i+1, next, availables, attacks);
     }
 
     if (i-1 >=0 && findPiece({i-1, next}) != nullptr) {
-        Piece* p = findPiece({i-1, next});
-        if (p->getColor() != color){ // different color piece, can be attacked
-            attacks.push_back({i-1, next});
-        }
+        p = findPiece({i-1, next});
+        updateVectors(this, p, i-1, next, availables, attacks);
     }
-
-    
-
+ 
     rt[0] = availables;
     rt[1] = attacks;
 
@@ -552,19 +549,10 @@ vector <vector <pair <int, int>>> King :: moves (){
         for (int y = j-1; y<=j+1; y++){
             if (y<0 || y>7) continue;
             if (x == i && y == j) continue;
-            Piece* n = findPiece({x,y});
-            if (n == nullptr){
-                availables.push_back({x,y});
-            
-            } else {
-                if (n->getColor() != color){
-                    attacks.push_back({x,y});
-                }
-            }
+            Piece* p = findPiece({x,y});
+            updateVectors(this, p, x,y, availables, attacks);
         }
     }
-
-
 
     rt[0] = availables;
     rt[1] = attacks;
@@ -574,7 +562,6 @@ vector <vector <pair <int, int>>> King :: moves (){
 }
 
 vector <vector <pair <int, int>>> knightHelper (Piece* t, int i, int j){
-    
 
     vector <vector <pair <int, int>>> rt (2);
     vector <pair <int, int>> availables;
@@ -593,7 +580,6 @@ vector <vector <pair <int, int>>> knightHelper (Piece* t, int i, int j){
     rt[1] = attacks;
 
     return rt;
-
 
 }
 
