@@ -28,14 +28,21 @@ void movePieceBackup(Piece* p, int i, int j){
     pair <int, int> current = p->getPosition();
     
     auto iterator = boardBackup.find({i,j});
-    if (iterator != boardBackup.end())
+    if (iterator != boardBackup.end()){
         boardBackup.erase({i,j});
+        cout << "erased from " << i << j << " prev one..\n";
+    }
+        
 
     auto it = boardBackup.find(current);
-    if (it != boardBackup.end())
+    if (it != boardBackup.end()){
         boardBackup.erase(current);
+        cout << "erased from " << current.first << current.second << " next\n";
+    }
+        
     
     boardBackup.insert({{i, j}, p});
+    cout << boardBackup[{i,j}]->getName() << endl;
 }
 
 bool kingCheckRook(int color, int i, int j){
@@ -146,6 +153,25 @@ bool kingCheckPawn(int color, int i,int j){
     
 }
 
+bool kingCheckKnight(int color, int i,int j){
+    //all possible attacking positions of the knight
+    int x[] = {i+2, i+2, i-2, i-2, i+1, i+1, i-1, i-1};
+    int y[] = {j+1, j-1, j+1, j-1, j+2, j-2, j+2, j-2};
+    for (int k=0; k<8; k++){
+        if (x[k] > 8 || x[k] <0 ||y[k] > 8 || y[k] <0 ){
+            continue;
+        } 
+        Piece* p = findPiece({x[k], y[k]});
+        if (p!= nullptr) {
+            if (p->getColor() != color && p->getName() == "knight" ){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
 bool kingCheck (int color){
     Piece* king = nullptr;
     for (auto x: pieces){
@@ -165,7 +191,7 @@ bool kingCheck (int color){
     }
     int i = pos.first;
     int j = pos.second;
-    cout << "King position established at " << i << ", " << j << endl; 
+    // cout << "King position established at " << i << ", " << j << endl; 
 
     // then check if any attacking piece in positions to attack...
     // if any rook or queen next piece in column or row, check
@@ -173,9 +199,12 @@ bool kingCheck (int color){
     if (rookCheck) return true;
     bool bishopCheck = kingCheckBishop(color, i, j);
     if (bishopCheck) return true;
-    
+ 
     bool pawnCheck = kingCheckPawn(color, i, j);
     if (pawnCheck) return true;
+
+    bool knightCheck = kingCheckKnight(color, i, j);
+    if (knightCheck) return true;
 
     // add Knight check logic
 
@@ -187,13 +216,14 @@ bool kingCheck (int color){
 //true if need to traverse more
 //t = this
 bool updateVectors (Piece* t, Piece* p, int i, int j, vector <pair <int, int>>& availables, vector <pair <int, int>>& attacks){
-    cout << "entered update funct" << i << j << endl;
+    // cout << "entered update funct" << i << j << endl;
     boardBackup = boardMap;
     if (p != nullptr){
         if (p->getColor() != t->getColor()){
             //checking if making this move (in the backup) results in check for my king.
             movePieceBackup(t, i, j);
             if (kingCheck(t->getColor()) == false ){
+                cout << "checking for update for attack " << t->getName() << i << j << endl; 
                 attacks.push_back({i, j});
             }
         }
@@ -508,7 +538,8 @@ vector <vector <pair <int, int>>> Pawn :: moves (){
 
     Piece* p = findPiece({i,next});
 
-    updateVectors(this, p, i, next, availables, attacks);
+    if (p==nullptr)
+        updateVectors(this, p, i, next, availables, attacks);
 
     p = findPiece({i,next+1});
     if (p == nullptr && color == 1 && j == 1){ // first move for white

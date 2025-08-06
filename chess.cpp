@@ -67,7 +67,7 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 			if(state == GLUT_DOWN){		// 2 times?? in ONE click? -- solution is checking DOWN or UP
 				
 				pair <int, int> p = findPosition(x,y);
-				cout << "clicked in " << p.first << ", " << p.second << endl;
+				// cout << "clicked in " << p.first << ", " << p.second << endl;
 				
 				
 				//update map for all case
@@ -76,7 +76,7 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 				if (selectedPiece && it != availables.end()){
 					pair <int, int> prevPos = selectedPiece->getPosition();
 					selectedPiece->setIndex(p.first, p.second);
-					cout << "piece moved in " << p.first << ", " << p.second << endl;
+					// cout << "piece moved in " << p.first << ", " << p.second << endl;
 					availables.clear();
 					attacks.clear();
 					//check queen for pawn
@@ -144,7 +144,7 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 				Piece* pos = findPiece(p);
 
 				if (pos != nullptr && pos->getColor() == current) {
-					cout << "piece found in " << p.first << " " <<p.second << endl;
+					// cout << "piece found in " << p.first << " " <<p.second << endl;
 					pos->print();
 					auto x = pos->moves();
 					availables = x[0];
