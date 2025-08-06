@@ -573,32 +573,19 @@ vector <vector <pair <int, int>>> King :: moves (){
     
 }
 
-vector <vector <pair <int, int>>> knightHelper (Piece* t, int i, int j, bool isUp){
-    int a=j, b=i;
-    if (isUp){
-        a = i;
-        b = j;
-    }
+vector <vector <pair <int, int>>> knightHelper (Piece* t, int i, int j){
+    
 
     vector <vector <pair <int, int>>> rt (2);
     vector <pair <int, int>> availables;
     vector <pair <int, int>> attacks;
 
-    if (a<8 && a>=0){
-
-        if (b >= 0 && b <8){
+    if (i<8 && i>=0){
+        if (j >= 0 && j <8){
             Piece *p;
-            if (isUp) p = findPiece({a,b});
-            else p = findPiece({b,a});
-            if (p != nullptr){
-                if (p->getColor() != t->getColor()){
-                    if (isUp)  attacks.push_back({a,b});
-                    else attacks.push_back({b,a});
-                }
-            } else {
-                if (isUp)  availables.push_back({a,b});
-                    else availables.push_back({b,a});
-            }
+            p = findPiece({i,j});
+            updateVectors(t, p, i, j, availables, attacks);
+        
         }
     }
 
@@ -616,10 +603,9 @@ vector <vector <pair <int, int>>> Knight :: moves (){
 
     int iArray[] = {i+2, i+2, i-2, i-2, i+1, i-1, i+1, i-1};
     int jArray[] = {j+1, j-1, j+1, j-1, j+2, j+2, j-2, j-2};
-    bool bArray[] = {true, true, true, true, false, false, false, false};
 
     for (int a =0; a<8; a++){
-        temp = knightHelper(this, iArray[a], jArray[a], bArray[a]);
+        temp = knightHelper(this, iArray[a], jArray[a]);
         for (auto x: temp[0]) rt[0].push_back(x);
         for (auto x: temp[1]) rt[1].push_back(x);
     }
