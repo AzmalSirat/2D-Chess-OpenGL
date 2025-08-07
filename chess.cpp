@@ -11,6 +11,7 @@ const int high_pos = 575, low_pos = 64;
 int current = 1; //starting from white
 extern pair <int, int> selected;
 extern vector <pair <int, int>> previous;
+extern bool currentCheck;
 Piece* selectedPiece = nullptr;
 
 
@@ -76,7 +77,7 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 				if (selectedPiece && it != availables.end()){
 					pair <int, int> prevPos = selectedPiece->getPosition();
 					selectedPiece->setIndex(p.first, p.second);
-					// cout << "piece moved in " << p.first << ", " << p.second << endl;
+					cout << "piece moved in " << p.first << ", " << p.second << endl;
 					availables.clear();
 					attacks.clear();
 					//check queen for pawn
@@ -96,7 +97,10 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					selectedPiece = nullptr;
 					selected = {-1,-1};
 					current = 1-current;
-					
+
+					boardBackup = boardMap;
+					currentCheck = kingCheck(current);
+					cout << "current check: " << currentCheck << endl;
 					return;
 				}
 
@@ -135,6 +139,9 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					selectedPiece = nullptr;
 					selected = {-1,-1};
 					current = 1-current;
+					boardBackup = boardMap;
+					currentCheck = kingCheck(current);
+					cout << "current check: " << currentCheck << endl;
 					return;
 				}
 

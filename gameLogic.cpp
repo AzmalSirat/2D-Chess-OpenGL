@@ -6,6 +6,8 @@ vector <pair <int, int>> availables;
 vector <pair <int, int>> attacks;
 pair <int, int> selected = {-1,-1};
 vector <pair <int, int>> previous = {{-1, -1}, {-1,-1}};
+bool currentCheck = false;
+extern int current;
 
 
 Piece* findPiece(pair <int, int> p){
@@ -246,6 +248,24 @@ bool updateVectors (Piece* t, Piece* p, int i, int j, vector <pair <int, int>>& 
     return true;
 }
 
+pair <int, int> findKingPosition (){
+    Piece* king = nullptr;
+    for (auto x: pieces){
+        if (x->getColor() == current && x->getName()=="king"){
+            king = x;
+            break;
+        }
+    }
+
+    //traverse map to find king's position
+    for (auto x: boardMap){
+        if (x.second == king){
+            return x.first;
+        }
+    }
+    return {-1,-1};
+}
+
 
 void drawSquare(double a)
 {
@@ -319,10 +339,17 @@ void drawCheckerBoard(){
 
     int current = 0;
     vector<float> currentColor;
+    pair <int, int> kingPosition = {-1,-1}; // if check, red..
+
+    if (currentCheck == true) {
+        kingPosition = findKingPosition();
+        cout << kingPosition.first << kingPosition.second << endl;
+    }
 
     for (int i=0; i<8; i++){
         double x = -7 + i*2;  // Position from -7 to 7 in steps of 2
         current = i % 2;  // Alternate starting color for each row
+
 
         glPushMatrix();
         
@@ -335,11 +362,17 @@ void drawCheckerBoard(){
                 glTranslatef(x, y, 0);
                 glColor3f(currentColor[0],currentColor[1],currentColor[2]);
                 drawSquare(1);
+
                 if (i == selected.first && j == selected.second){
                     double clr[] = {0.1, 0.9, 0.1};
                     highlight(clr);
                     // continue;
                 }
+                else if (currentCheck && i == kingPosition.first && j == kingPosition.second){
+                    double clr[] = {0.15,1,0.15};
+                    highlight(clr);
+                }
+
                 // if ((i == previous[0].first && j == previous[0].second) ){
                 //     double clr[] = {0.9,0.9,0.1};
                 //     highlight(clr);
@@ -472,7 +505,6 @@ void initBoard(){
                 pieces.push_back(p);
                 backup.push_back(p);
                 boardMap.insert({{i,j}, p});
-                boardBackup.insert({{i,j}, p});
             }
             continue;
         }
@@ -484,7 +516,6 @@ void initBoard(){
                     pieces.push_back(p);
                     backup.push_back(p);
                     boardBackup.insert({{i,j}, p});
-                    boardMap.insert({{i,j}, p});
                     
                 }
                 if (i==1 || i==6){
@@ -492,7 +523,6 @@ void initBoard(){
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
                     backup.push_back(p);
-                    boardBackup.insert({{i,j}, p});
 
                 }
                 if (i==2 || i==5){
@@ -500,7 +530,6 @@ void initBoard(){
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
                     backup.push_back(p);
-                    boardBackup.insert({{i,j}, p});
 
                 }
                 
@@ -509,7 +538,6 @@ void initBoard(){
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
                     backup.push_back(p);
-                    boardBackup.insert({{i,j}, p});
 
                 }
                 if (i==3){
@@ -517,13 +545,13 @@ void initBoard(){
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
                     backup.push_back(p);
-                    boardBackup.insert({{i,j}, p});
 
                 }
             }
         }
         
     }
+    boardBackup = boardMap;
 }
 
 //find moves method
@@ -544,17 +572,19 @@ vector <vector <pair <int, int>>> Pawn :: moves (){
 
     Piece* p = findPiece({i,next});
 
-    if (p==nullptr)
+    if (p==nullptr){
         updateVectors(this, p, i, next, availables, attacks);
 
-    p = findPiece({i,next+1});
-    if (p == nullptr && color == 1 && j == 1){ // first move for white
-        updateVectors(this, p, i, next+1, availables, attacks);
+        p = findPiece({i,next+1});
+        if (p == nullptr && color == 1 && j == 1){ // first move for white
+            updateVectors(this, p, i, next+1, availables, attacks);
+        }
+        p = findPiece({i,next-1});
+        if (p == nullptr && color == 0 && j == 6){ // first move for black
+            updateVectors(this, p, i, next-1, availables, attacks);
+        }
     }
-    p = findPiece({i,next-1});
-    if (p == nullptr && color == 0 && j == 6){ // first move for black
-        updateVectors(this, p, i, next-1, availables, attacks);
-    }
+        
 
     if (i+1 < 8 && findPiece({i+1, next}) != nullptr) {
         p = findPiece({i+1, next});
@@ -674,14 +704,10 @@ vector <vector <pair <int, int>>> bishopHelper(Piece* t, int i, int j){
             break;
         }
     }
-
-
     rt[0] = availables;
     rt[1] = attacks;
 
     return rt;
-    
-
 }
 
 vector <vector <pair <int, int>>> Bishop :: moves (){
