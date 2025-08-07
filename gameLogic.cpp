@@ -214,6 +214,20 @@ bool kingCheck (int color){
 
 }
 
+bool checkMate(int color){
+    vector <vector <pair <int, int>>> moves;
+    for (auto x: pieces){
+        if (x->getColor() == color){
+            moves = x->moves();
+            // at least one move available which removes the check
+            if (moves[0].size() > 0 || moves[1].size()>0){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 // t = this, p = piece on (i,j)
 //true if need to traverse more
 //t = this

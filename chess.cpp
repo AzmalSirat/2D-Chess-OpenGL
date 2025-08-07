@@ -100,7 +100,13 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 
 					boardBackup = boardMap;
 					currentCheck = kingCheck(current);
-					cout << "current check: " << currentCheck << endl;
+					if (currentCheck){
+						if (checkMate(current)){
+							cout << "Game end, winner: ";
+							if (current == 1) cout << "Black" << endl;
+							else cout << "White" << endl;
+						}
+					}
 					return;
 				}
 
@@ -141,7 +147,13 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					current = 1-current;
 					boardBackup = boardMap;
 					currentCheck = kingCheck(current);
-					cout << "current check: " << currentCheck << endl;
+					if (currentCheck){
+						if (checkMate(current)){
+							cout << "Game end, winner: ";
+							if (current == 1) cout << "Black" << endl;
+							else cout << "White" << endl;
+						}
+					}
 					return;
 				}
 
