@@ -62,7 +62,7 @@ bool kingCheckRook(int color, int i, int j){
             if (p->getColor() != color && (p->getName()== "rook" || p->getName() == "queen")){
                 return true;
             }
-            break;; // check other options for check...
+            break; // check other options for check...
         }
     }
 
@@ -161,7 +161,7 @@ bool kingCheckKnight(int color, int i,int j){
         if (x[k] > 8 || x[k] <0 ||y[k] > 8 || y[k] <0 ){
             continue;
         } 
-        Piece* p = findPiece({x[k], y[k]});
+        Piece* p = findBackup({x[k], y[k]});
         if (p!= nullptr) {
             if (p->getColor() != color && p->getName() == "knight" ){
                 return true;
