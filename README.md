@@ -48,14 +48,6 @@ cd chess-project
 g++ chess.cpp -o chess -lglut -lGLU -lGL && ./chess
 ```
 
-### Docker (Cross-platform - Simplified)
-```bash
-# Build and run with docker-compose
-docker-compose up --build
-
-# If you encounter X11 permission errors on Linux/macOS, run this first:
-# xhost +local:docker
-```
 
 ## Gameplay
 
