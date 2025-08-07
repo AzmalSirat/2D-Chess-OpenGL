@@ -61,7 +61,7 @@ g++ chess.cpp -o chess -lglut -lGLU -lGL && ./chess
 
 ## Demo
 
-Youtube Link: [Demo Video](https://github.com/AzmalSirat)
+Youtube Link: [Demo Video](https://youtu.be/-DSlaeM43OU)
 
 ## Requirements
 

@@ -35,7 +35,7 @@ class Piece {
     }
 
     void print(){
-        cout << name << " selected at pos " << i << j << endl;
+        // cout << name << " selected at pos " << i << j << endl;
     }
 
     void setIndex (int i, int j){

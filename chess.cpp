@@ -79,7 +79,7 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 				if (selectedPiece && it != availables.end()){
 					pair <int, int> prevPos = selectedPiece->getPosition();
 					selectedPiece->setIndex(p.first, p.second);
-					cout << "piece moved in " << p.first << ", " << p.second << endl;
+					// cout << "piece moved in " << p.first << ", " << p.second << endl;
 					availables.clear();
 					attacks.clear();
 					//check queen for pawn
