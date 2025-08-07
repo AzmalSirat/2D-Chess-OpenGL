@@ -531,21 +531,17 @@ void initBoard(){
                     Piece* p = new Rook (i, j, color, "rook");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
-                    
                 }
                 if (i==1 || i==6){
                     Piece* p = new Knight (i, j, color, "knight");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
-
                 }
                 if (i==2 || i==5){
                     Piece* p = new Bishop (i, j, color, "bishop");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
-
                 }
-                
                 if (i==4){
                     Piece* p = new King (i, j, color, "king");
                     pieces.push_back(p);
@@ -608,7 +604,6 @@ vector <vector <pair <int, int>>> Pawn :: moves (){
  
     rt[0] = availables;
     rt[1] = attacks;
-
     return rt;
     
 }
@@ -635,7 +630,6 @@ vector <vector <pair <int, int>>> King :: moves (){
     rt[1] = attacks;
 
     return rt;
-    
 }
 
 vector <vector <pair <int, int>>> knightHelper (Piece* t, int i, int j){
@@ -649,10 +643,8 @@ vector <vector <pair <int, int>>> knightHelper (Piece* t, int i, int j){
             Piece *p;
             p = findPiece({i,j});
             updateVectors(t, p, i, j, availables, attacks);
-        
         }
     }
-
     rt[0] = availables;
     rt[1] = attacks;
 
@@ -787,7 +779,6 @@ vector <vector <pair <int, int>>> Queen :: moves (){
     for (auto x: b[1]){
         rt[1].push_back(x);
     }
-
     return rt;
     
 }
@@ -803,8 +794,8 @@ Piece* checkPawn(Piece* p, pair <int, int> pos){
 }
 
 void renderText(float x, float y, const char* text) {
-    glColor3f(1.0, 1.0, 1.0);  // White color
-    glRasterPos2f(x, y);       // Position where text starts
+    glColor3f(1.0, 1.0, 1.0);  
+    glRasterPos2f(x, y);       
     
     for (const char* c = text; *c != '\0'; c++) {
         glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
