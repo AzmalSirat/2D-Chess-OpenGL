@@ -158,7 +158,7 @@ bool kingCheckKnight(int color, int i,int j){
     int x[] = {i+2, i+2, i-2, i-2, i+1, i+1, i-1, i-1};
     int y[] = {j+1, j-1, j+1, j-1, j+2, j-2, j+2, j-2};
     for (int k=0; k<8; k++){
-        if (x[k] > 8 || x[k] <0 ||y[k] > 8 || y[k] <0 ){
+        if (x[k] >= 8 || x[k] <0 ||y[k] >= 8 || y[k] <0 ){
             continue;
         } 
         Piece* p = findBackup({x[k], y[k]});
@@ -218,6 +218,10 @@ bool kingCheck (int color){
 bool updateVectors (Piece* t, Piece* p, int i, int j, vector <pair <int, int>>& availables, vector <pair <int, int>>& attacks){
     // cout << "entered update funct" << i << j << endl;
     boardBackup = boardMap;
+    // Store original position for restoration
+    pair<int, int> originalPos = t->getPosition();
+    
+
     if (p != nullptr){
         if (p->getColor() != t->getColor()){
             //checking if making this move (in the backup) results in check for my king.
@@ -226,6 +230,7 @@ bool updateVectors (Piece* t, Piece* p, int i, int j, vector <pair <int, int>>& 
                 cout << "checking for update for attack " << t->getName() << i << j << endl; 
                 attacks.push_back({i, j});
             }
+            t->setIndex(originalPos.first, originalPos.second);
         }
         boardBackup = boardMap;
         //updated attacks, or same color piece at first, so no need to traverse ahead.
@@ -235,6 +240,7 @@ bool updateVectors (Piece* t, Piece* p, int i, int j, vector <pair <int, int>>& 
         if (kingCheck(t->getColor()) == false ){
             availables.push_back({i, j});
         }
+        t->setIndex(originalPos.first, originalPos.second);
     }
     boardBackup = boardMap;
     return true;
