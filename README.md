@@ -34,7 +34,7 @@ The game provides clear visual feedback for player actions:
 
 ### Clone the Repository
 ```bash
-git clone <https://github.com/AzmalSirat/2D-Chess-OpenGL>
+git clone https://github.com/AzmalSirat/2D-Chess-OpenGL
 cd chess-project
 ```
 
