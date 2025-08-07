@@ -131,9 +131,9 @@ bool kingCheckBishop (int color, int i, int j){
 }
 
 bool kingCheckPawn(int color, int i,int j){
-    int next = j+1;
+    int next = j-1;
     if (color == 1) {
-        next = j-1;
+        next = j+1;
     }
     if (i+1 < 8){
         Piece* p = findBackup({i+1, next});
@@ -369,7 +369,7 @@ void drawCheckerBoard(){
                     // continue;
                 }
                 else if (currentCheck && i == kingPosition.first && j == kingPosition.second){
-                    double clr[] = {0.15,1,0.15};
+                    double clr[] = {1,0.15,0.15};
                     highlight(clr);
                 }
 
@@ -387,7 +387,7 @@ void drawCheckerBoard(){
                 }
                 for (auto p: attacks){
                     if (p.first == i && p.second == j){
-                        double clr[] = {0.8, 0.1, 0.1};
+                        double clr[] = {1, 0.5, 0};
                         highlight(clr);
                         continue;
                     }
@@ -515,7 +515,7 @@ void initBoard(){
                     Piece* p = new Rook (i, j, color, "rook");
                     pieces.push_back(p);
                     backup.push_back(p);
-                    boardBackup.insert({{i,j}, p});
+                    boardMap.insert({{i,j}, p});
                     
                 }
                 if (i==1 || i==6){
