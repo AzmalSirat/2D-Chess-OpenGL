@@ -338,7 +338,7 @@ void drawCheckerBoard(){
     vector <vector<float>> color;
     //checkeboard colors
     // color.push_back({0.85, 0.85, 0.65});
-    color.push_back({0.56, 0.68, 0.2});
+    color.push_back({0.5, 0.6, 0.4});
     color.push_back({0.5, 0.25, 0});
 
     int current = 0;
