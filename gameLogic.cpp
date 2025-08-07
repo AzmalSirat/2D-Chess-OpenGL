@@ -32,19 +32,19 @@ void movePieceBackup(Piece* p, int i, int j){
     auto iterator = boardBackup.find({i,j});
     if (iterator != boardBackup.end()){
         boardBackup.erase({i,j});
-        cout << "erased from " << i << j << " prev one..\n";
+        // cout << "erased from " << i << j << " prev one..\n";
     }
         
 
     auto it = boardBackup.find(current);
     if (it != boardBackup.end()){
         boardBackup.erase(current);
-        cout << "erased from " << current.first << current.second << " next\n";
+        // cout << "erased from " << current.first << current.second << " next\n";
     }
         
     
     boardBackup.insert({{i, j}, p});
-    cout << boardBackup[{i,j}]->getName() << endl;
+    // cout << boardBackup[{i,j}]->getName() << endl;
 }
 
 bool kingCheckRook(int color, int i, int j){
@@ -800,4 +800,13 @@ Piece* checkPawn(Piece* p, pair <int, int> pos){
         return queen;
     }
     return nullptr; 
+}
+
+void renderText(float x, float y, const char* text) {
+    glColor3f(1.0, 1.0, 1.0);  // White color
+    glRasterPos2f(x, y);       // Position where text starts
+    
+    for (const char* c = text; *c != '\0'; c++) {
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
+    }
 }

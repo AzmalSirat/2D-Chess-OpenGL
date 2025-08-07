@@ -13,6 +13,7 @@ extern pair <int, int> selected;
 extern vector <pair <int, int>> previous;
 extern bool currentCheck;
 Piece* selectedPiece = nullptr;
+bool gameEnd = false;
 
 
 pair <int, int> findPosition (int x, int y) {
@@ -63,6 +64,7 @@ void specialKeyListener(int key, int x,int y){
 
 
 void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of the screen (2D)
+	if (gameEnd) return;
 	switch(button){
 		case GLUT_LEFT_BUTTON:
 			if(state == GLUT_DOWN){		// 2 times?? in ONE click? -- solution is checking DOWN or UP
@@ -102,9 +104,7 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					currentCheck = kingCheck(current);
 					if (currentCheck){
 						if (checkMate(current)){
-							cout << "Game end, winner: ";
-							if (current == 1) cout << "Black" << endl;
-							else cout << "White" << endl;
+							gameEnd = true;
 						}
 					}
 					return;
@@ -149,9 +149,7 @@ void mouseListener(int button, int state, int x, int y){	//x, y is the x-y of th
 					currentCheck = kingCheck(current);
 					if (currentCheck){
 						if (checkMate(current)){
-							cout << "Game end, winner: ";
-							if (current == 1) cout << "Black" << endl;
-							else cout << "White" << endl;
+							gameEnd= true;
 						}
 					}
 					return;
@@ -238,7 +236,42 @@ void display(){
 	}
 
 	//ADD this line in the end --- if you use double buffer (i.e. GL_DOUBLE)
-	glutSwapBuffers();
+	// glutSwapBuffers();
+
+	glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    gluOrtho2D(0, 640, 0, 640);  // Set 2D coordinate system
+    
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+    
+    if (gameEnd == true){
+		if (current == 0){
+			// cout << "checkmate";
+			renderText(250, 30, "White Wins!");  // Center position
+		}
+		else {
+			// cout << "checkmate";
+			renderText(250, 600, "Black Wins!");  // Center position
+		}
+	}
+	
+	// Disable depth testing for text overlay
+    glDisable(GL_DEPTH_TEST);
+    
+	
+    
+    glEnable(GL_DEPTH_TEST);
+    
+    // Restore matrices
+    glPopMatrix();
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    
+    glutSwapBuffers();
 }
 
 
