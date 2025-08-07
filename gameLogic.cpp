@@ -1,6 +1,6 @@
 #include "drawPieces.cpp"
 
-vector <Piece*> pieces, backup;
+vector <Piece*> pieces;
 map <pair <int, int>, Piece*> boardMap, boardBackup;
 vector <pair <int, int>> availables;
 vector <pair <int, int>> attacks;
@@ -348,8 +348,9 @@ void highlight(double color[]){
 void drawCheckerBoard(){
     vector <vector<float>> color;
     //checkeboard colors
-    color.push_back({0.85, 0.85, 0.65});
+    // color.push_back({0.85, 0.85, 0.65});
     color.push_back({0.66, 0.78, 0.3});
+    color.push_back({0.5, 0.25, 0.});
 
     int current = 0;
     vector<float> currentColor;
@@ -378,12 +379,14 @@ void drawCheckerBoard(){
                 drawSquare(1);
 
                 if (i == selected.first && j == selected.second){
-                    double clr[] = {0.1, 0.9, 0.1};
+                    // glColor3f (0.1,0.5,0.2);
+                    // double clr[] = {0, 1, 0};
+                    double clr [] = {0.1,0.6,0.2};
                     highlight(clr);
                     // continue;
                 }
                 else if (currentCheck && i == kingPosition.first && j == kingPosition.second){
-                    double clr[] = {1,0.15,0.15};
+                    double clr[] = {1,0.1,0.1};
                     highlight(clr);
                 }
 
@@ -401,7 +404,7 @@ void drawCheckerBoard(){
                 }
                 for (auto p: attacks){
                     if (p.first == i && p.second == j){
-                        double clr[] = {1, 0.5, 0};
+                        double clr[] = {1, 0.33, 0};
                         highlight(clr);
                         continue;
                     }
@@ -517,7 +520,6 @@ void initBoard(){
             for (int i=0; i<8; i++){
                 Piece* p = new Pawn (i, j, color, "pawn");
                 pieces.push_back(p);
-                backup.push_back(p);
                 boardMap.insert({{i,j}, p});
             }
             continue;
@@ -528,7 +530,6 @@ void initBoard(){
                 if (i==0 || i==7){
                     Piece* p = new Rook (i, j, color, "rook");
                     pieces.push_back(p);
-                    backup.push_back(p);
                     boardMap.insert({{i,j}, p});
                     
                 }
@@ -536,14 +537,12 @@ void initBoard(){
                     Piece* p = new Knight (i, j, color, "knight");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
-                    backup.push_back(p);
 
                 }
                 if (i==2 || i==5){
                     Piece* p = new Bishop (i, j, color, "bishop");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
-                    backup.push_back(p);
 
                 }
                 
@@ -551,19 +550,16 @@ void initBoard(){
                     Piece* p = new King (i, j, color, "king");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
-                    backup.push_back(p);
 
                 }
                 if (i==3){
                     Piece* p = new Queen (i, j, color, "queen");
                     pieces.push_back(p);
                     boardMap.insert({{i,j}, p});
-                    backup.push_back(p);
 
                 }
             }
-        }
-        
+        }     
     }
     boardBackup = boardMap;
 }
@@ -805,4 +801,3 @@ Piece* checkPawn(Piece* p, pair <int, int> pos){
     }
     return nullptr; 
 }
-
