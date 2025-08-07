@@ -32,19 +32,14 @@ void movePieceBackup(Piece* p, int i, int j){
     auto iterator = boardBackup.find({i,j});
     if (iterator != boardBackup.end()){
         boardBackup.erase({i,j});
-        // cout << "erased from " << i << j << " prev one..\n";
     }
-        
-
+ 
     auto it = boardBackup.find(current);
     if (it != boardBackup.end()){
         boardBackup.erase(current);
-        // cout << "erased from " << current.first << current.second << " next\n";
     }
         
-    
     boardBackup.insert({{i, j}, p});
-    // cout << boardBackup[{i,j}]->getName() << endl;
 }
 
 bool kingCheckRook(int color, int i, int j){
@@ -193,7 +188,6 @@ bool kingCheck (int color){
     }
     int i = pos.first;
     int j = pos.second;
-    // cout << "King position established at " << i << ", " << j << endl; 
 
     // then check if any attacking piece in positions to attack...
     // if any rook or queen next piece in column or row, check
@@ -232,7 +226,7 @@ bool checkMate(int color){
 //true if need to traverse more
 //t = this
 bool updateVectors (Piece* t, Piece* p, int i, int j, vector <pair <int, int>>& availables, vector <pair <int, int>>& attacks){
-    // cout << "entered update funct" << i << j << endl;
+    
     boardBackup = boardMap;
     // Store original position for restoration
     pair<int, int> originalPos = t->getPosition();
@@ -243,7 +237,6 @@ bool updateVectors (Piece* t, Piece* p, int i, int j, vector <pair <int, int>>& 
             //checking if making this move (in the backup) results in check for my king.
             movePieceBackup(t, i, j);
             if (kingCheck(t->getColor()) == false ){
-                cout << "checking for update for attack " << t->getName() << i << j << endl; 
                 attacks.push_back({i, j});
             }
             t->setIndex(originalPos.first, originalPos.second);
@@ -292,12 +285,9 @@ void drawSquare(double a)
 	}glEnd();
 }
 
-void drawCircle(string color) {
+void drawCircle() {
 
-    if (color == "red"){
-        glColor3f (0.8,0.1,0.1);
-    }
-    else glColor3f (0.1,0.5,0.2);
+    glColor3f (0.1,0.5,0.2);
     
     glBegin(GL_TRIANGLE_FAN);
     glVertex3f(0, 0, 0.5);  // Center of the circle at origin
@@ -312,7 +302,6 @@ void drawCircle(string color) {
         glVertex3f(x, y, 0.5);
     }
 
-    // cout << "circle drawn." << endl;
     
     glEnd();
 }
@@ -349,8 +338,8 @@ void drawCheckerBoard(){
     vector <vector<float>> color;
     //checkeboard colors
     // color.push_back({0.85, 0.85, 0.65});
-    color.push_back({0.66, 0.78, 0.3});
-    color.push_back({0.5, 0.25, 0.});
+    color.push_back({0.56, 0.68, 0.2});
+    color.push_back({0.5, 0.25, 0});
 
     int current = 0;
     vector<float> currentColor;
@@ -358,7 +347,6 @@ void drawCheckerBoard(){
 
     if (currentCheck == true) {
         kingPosition = findKingPosition();
-        cout << kingPosition.first << kingPosition.second << endl;
     }
 
     for (int i=0; i<8; i++){
@@ -397,7 +385,7 @@ void drawCheckerBoard(){
                 for (auto p: availables){
                     if (p.first == i && p.second == j){
                         glTranslatef(0.1*(4-i),0.1*(4-j),0);
-                        drawCircle("green");
+                        drawCircle();
                         
                         continue;
                     }
@@ -428,27 +416,12 @@ void drawAvailables(vector <pair <int, int>> availables){
         int x = -7 + 2* p.first; // x = -7 + 2i
         int y = -7 + 2* p.second; // y = -7 + 2j
         glTranslatef(x, y, 0.5);
-        // cout << "trying to draw at " << x << y << " green" << endl;
         // glColor3f(0.1, 0.8, 0.1);  // Set color to green
     
-        drawCircle("green");
+        drawCircle();
         glPopMatrix();
     }
 }
-
-void drawAttacks(vector <pair <int, int>> attacks){
-    for (auto p: attacks){
-        glPushMatrix();
-        int x = -7 + 2* p.first; // x = -7 + 2i
-        int y = -7 + 2* p.second; // y = -7 + 2j
-        // glTranslatef(x, y, 0);
-        // glColor3f(0.8, 0.1, 0.1);  // Set color to green
-    
-        drawCircle("red");
-        glPopMatrix();
-    }
-}
-
 
 void King:: draw () {
 

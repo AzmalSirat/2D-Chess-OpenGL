@@ -28,14 +28,13 @@ The game provides clear visual feedback for player actions:
 
 - Stalemate detection
 - Castling (kingside and queenside)
-- Pawn promotion choice (automatically promotes to queen)
-- En passant capture
+- Pawn promotion choice (automatically promotes to Queen)
 
 ## How to Run
 
 ### Clone the Repository
 ```bash
-git clone <repository-url>
+git clone <https://github.com/AzmalSirat/2D-Chess-OpenGL>
 cd chess-project
 ```
 
