@@ -77,7 +77,6 @@ Youtube Link: [Demo Video](https://youtu.be/-DSlaeM43OU)
   - Encapsulation of game state and move validation
 - **OpenGL** for 3D graphics rendering
 - **GLUT** for window management and input handling
-- **Docker** for containerized deployment
 
 ---
 

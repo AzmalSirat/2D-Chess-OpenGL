@@ -5,7 +5,7 @@ map <pair <int, int>, Piece*> boardMap, boardBackup;
 vector <pair <int, int>> availables;
 vector <pair <int, int>> attacks;
 pair <int, int> selected = {-1,-1};
-vector <pair <int, int>> previous = {{-1, -1}, {-1,-1}};
+// vector <pair <int, int>> previous = {{-1, -1}, {-1,-1}};
 bool currentCheck = false;
 extern int current;
 

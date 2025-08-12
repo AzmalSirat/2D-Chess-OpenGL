@@ -10,7 +10,7 @@ pair <int, int> position;
 const int high_pos = 575, low_pos = 64;
 int current = 1; //starting from white
 extern pair <int, int> selected;
-extern vector <pair <int, int>> previous;
+// extern vector <pair <int, int>> previous;
 extern bool currentCheck;
 Piece* selectedPiece = nullptr;
 bool gameEnd = false;

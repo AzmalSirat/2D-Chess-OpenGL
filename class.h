@@ -3,6 +3,7 @@
 
 using namespace std;
 
+//how much extra translation needed
 double xt[] = {1.4,1,0.6,0.2,-0.2,-0.6,-1,-1.4};
 double yt[] = {1.3,0.9,0.4,0,-0.3,-0.7,-1.2,-1.7};
 
